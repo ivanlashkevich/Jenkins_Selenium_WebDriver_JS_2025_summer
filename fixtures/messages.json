@@ -1,0 +1,12 @@
+{
+    "newItem": {
+        "specialCharactersInNameError": "» ‘<’ is an unsafe character",
+        "sameNameError": "» A job already exists with the name"
+    },
+    "renameItem": {
+        "specialCharactersInNameError": "‘<’ is an unsafe character"
+    },
+    "pipelineConfiguration": {
+        "disabledProject": "This project is currently disabled"
+    }
+}

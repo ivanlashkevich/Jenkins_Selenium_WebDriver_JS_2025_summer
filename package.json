@@ -1,0 +1,35 @@
+{
+  "name": "seleniumwebdriver",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "clean": "rimraf allure-results allure-report xunit.xml",
+    "test:JenkinsTests": "npm run clean && mocha --config mocha.json \"JenkinsTests/**/*.spec.js\"",
+    "test:oldTests": "npm run clean && mocha --config mocha.json \"oldTests/**/*.spec.js\"",
+    "report:generate": "allure generate allure-results --clean -o allure-report",
+    "report:open": "allure open allure-report"
+  },
+  "author": "Ivan Lashkevich",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/register": "^7.27.1",
+    "@faker-js/faker": "^9.9.0",
+    "allure-commandline": "^2.34.1",
+    "allure-mocha": "^3.3.2",
+    "chai": "^5.2.0",
+    "mocha": "^11.7.1",
+    "mocha-multi-reporters": "^1.5.1",
+    "rimraf": "^6.0.1",
+    "selenium-webdriver": "^4.34.0"
+  },
+  "mocha": {
+    "timeout": 10000
+  },
+  "dependencies": {
+    "dotenv": "^17.0.1"
+  }
+}

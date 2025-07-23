@@ -1,0 +1,9 @@
+{
+  "reporter": "allure-mocha",
+  "reporterOptions": {
+    "resultsDir": "allure-results"
+  },
+  "timeout": 60000,
+  "recursive": true,
+  "require": ["@babel/register"]
+}

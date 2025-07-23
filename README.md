@@ -17,9 +17,9 @@ The project is designed to showcase proficiency with Selenium WebDriver, Mocha, 
 
 ## Table of Contents
 
-- [🗂️ Documentation](#-documentation)
+- [🗂️ Documentation](#️-documentation)
   - [⚙️ Prerequisites](#prerequisites)
-  - [▶️ Run the project](#-run-the-project)
+  - [▶️ Run the project](#️-run-the-project)
   - [📊 Generate Allure report](#-generate-allure-report)
   - [🧩 Test structure](#-test-structure)
   - [🧪 Faker library](#-faker-library)

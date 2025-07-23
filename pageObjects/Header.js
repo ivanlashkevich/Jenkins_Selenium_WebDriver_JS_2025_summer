@@ -29,7 +29,7 @@ class Header {
 
     async clickDashhboardBreadcrumbChevron() {
         const chevron = await this.driver.wait(until.elementLocated(this.dashboardBreadcrumbChevronLocator), 5000);
-        await this.driver.executeScript("arguments[0].click();", chevron);
+        await this.driver.executeScript('arguments[0].click();', chevron);
         await this.driver.actions().move({ origin: chevron }).pause(500).perform();
     }
 

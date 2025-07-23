@@ -1,15 +1,14 @@
-import { Builder, By, until } from "selenium-webdriver";
-import { after, afterEach, before, beforeEach, describe, it } from "mocha";
-import { expect } from "chai";
-import { Select } from 'selenium-webdriver/lib/select.js';
-import { cleanData } from "../support/cleanData.js";
-import { login } from "../fixtures/helperFunctions.js";
-import genData from "../fixtures/genData.js";
+import { Builder, By, until } from 'selenium-webdriver';
+import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
+import { expect } from 'chai';
+import { cleanData } from '../support/cleanData.js';
+import { login } from '../fixtures/helperFunctions.js';
+import genData from '../fixtures/genData.js';
 import message from '../fixtures/messages.json' assert { type: 'json' };
 import repositoryURL from '../fixtures/pipelinePageData.json' assert { type: 'json' };
-import DashboardPage from "../pageObjects/DashboardPage.js";
-import NewJobPage from "../pageObjects/NewJobPage.js";
-import PipelinePage from "../pageObjects/PipelinePage.js";
+import DashboardPage from '../pageObjects/DashboardPage.js';
+import NewJobPage from '../pageObjects/NewJobPage.js';
+import PipelinePage from '../pageObjects/PipelinePage.js';
 
 describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
 

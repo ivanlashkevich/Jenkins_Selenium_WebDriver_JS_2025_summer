@@ -1,6 +1,6 @@
-import { By, until } from "selenium-webdriver";
+import { By, until } from 'selenium-webdriver';
 import { Select } from 'selenium-webdriver/lib/select.js';
-import BasePage from "./basePage.js";
+import BasePage from './basePage.js';
 
 class FreeStyleProjectPage extends BasePage {
 

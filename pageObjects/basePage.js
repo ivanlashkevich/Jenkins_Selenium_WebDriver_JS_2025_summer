@@ -1,5 +1,5 @@
-import { By, until, Key } from "selenium-webdriver";
-import Header from "./Header.js";
+import { By, until, Key } from 'selenium-webdriver';
+import Header from './Header.js';
 
 class BasePage extends Header {
 

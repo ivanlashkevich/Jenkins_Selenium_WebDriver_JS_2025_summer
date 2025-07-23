@@ -1,5 +1,5 @@
-import { By, until } from "selenium-webdriver";
-import BasePage from "./basePage.js";
+import { By, until } from 'selenium-webdriver';
+import BasePage from './basePage.js';
 
 class DashboardPage extends BasePage {
     

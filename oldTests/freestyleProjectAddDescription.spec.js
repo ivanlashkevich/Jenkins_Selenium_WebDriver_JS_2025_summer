@@ -1,9 +1,9 @@
-import { Builder, By, until } from "selenium-webdriver";
-import { after, afterEach, before, beforeEach, describe, it } from "mocha";
-import { expect } from "chai";
-import { cleanData } from "../support/cleanData.js";
-import genData from "../fixtures/genData.js";
-import { login } from "../fixtures/helperFunctions.js";
+import { Builder, By, until } from 'selenium-webdriver';
+import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
+import { expect } from 'chai';
+import { cleanData } from '../support/cleanData.js';
+import genData from '../fixtures/genData.js';
+import { login } from '../fixtures/helperFunctions.js';
 
 
 describe('US_01.001 | FreestyleProject > Add description', () => {

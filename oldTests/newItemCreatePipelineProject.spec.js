@@ -16,9 +16,9 @@ describe('US_00.002 | New Item > Create Pipeline Project', () => {
     before(async () => {
         driver = await new Builder().forBrowser('chrome').build();
         await driver.manage().setTimeouts({
-            implicit: 3000,    // Ожидание элементов
-            pageLoad: 10000,   // Загрузка страницы
-            script: 5000       // Асинхронные скрипты
+            implicit: 3000,
+            pageLoad: 10000,
+            script: 5000
         });
         // await driver.manage().window().maximize();
     });

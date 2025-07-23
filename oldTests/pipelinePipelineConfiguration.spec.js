@@ -1,10 +1,10 @@
-import { Builder, By, until } from "selenium-webdriver";
-import { after, afterEach, before, beforeEach, describe, it } from "mocha";
-import { expect } from "chai";
+import { Builder, By, until } from 'selenium-webdriver';
+import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
+import { expect } from 'chai';
 import { Select } from 'selenium-webdriver/lib/select.js';
-import { cleanData } from "../support/cleanData.js";
-import { login } from "../fixtures/helperFunctions.js";
-import genData from "../fixtures/genData.js";
+import { cleanData } from '../support/cleanData.js';
+import { login } from '../fixtures/helperFunctions.js';
+import genData from '../fixtures/genData.js';
 import message from '../fixtures/messages.json' assert { type: 'json' };
 import repositoryURL from '../fixtures/pipelinePageData.json' assert { type: 'json' };
 
@@ -30,10 +30,10 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
         project = genData.newProject();
         await driver.manage().deleteAllCookies();
         await login(driver);
+        
         await driver.findElement(By.css('#side-panel [href$="newJob"]')).click();
         await driver.findElement(By.id('name')).sendKeys(project.name);
         await driver.findElement(By.className('org_jenkinsci_plugins_workflow_job_WorkflowJob')).click();
-
         const okButton = await driver.wait(until.elementLocated(By.id('ok-button')), 5000);
         await driver.wait(until.elementIsVisible(okButton), 5000);
         await driver.wait(until.elementIsEnabled(okButton), 5000);

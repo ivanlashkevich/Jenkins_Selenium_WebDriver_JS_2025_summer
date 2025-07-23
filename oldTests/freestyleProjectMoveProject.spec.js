@@ -1,10 +1,10 @@
-import { Builder, By, until } from "selenium-webdriver";
-import { after, afterEach, before, beforeEach, describe, it } from "mocha";
-import { expect } from "chai";
+import { Builder, By, until } from 'selenium-webdriver';
+import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
+import { expect } from 'chai';
 import { Select } from 'selenium-webdriver/lib/select.js';
-import { cleanData } from "../support/cleanData.js";
-import { login, createProject, selectRandomFolder } from "../fixtures/helperFunctions.js";
-import genData from "../fixtures/genData.js";
+import { cleanData } from '../support/cleanData.js';
+import { login, createProject, selectRandomFolder } from '../fixtures/helperFunctions.js';
+import genData from '../fixtures/genData.js';
 
 
 describe('US_01.006 | FreestyleProject > Move project', () => {
@@ -15,9 +15,9 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
     before(async () => {
         driver = await new Builder().forBrowser('chrome').build();
         await driver.manage().setTimeouts({
-            implicit: 3000,    // Ожидание элементов
-            pageLoad: 10000,   // Загрузка страницы
-            script: 5000       // Асинхронные скрипты
+            implicit: 3000,
+            pageLoad: 10000,
+            script: 5000
         });
     });
 

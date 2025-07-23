@@ -1,13 +1,13 @@
-import { Builder } from "selenium-webdriver";
-import { after, afterEach, before, beforeEach, describe, it } from "mocha";
-import { expect } from "chai";
-import { cleanData } from "../support/cleanData.js";
-import { login, createProject, selectRandomFolder } from "../fixtures/helperFunctions.js";
-import genData from "../fixtures/genData.js";
-import Header from "../pageObjects/Header.js";
-import DashboardPage from "../pageObjects/DashboardPage.js";
-import FreeStyleProjectPage from "../pageObjects/FreestyleProjectPage.js";
-import FolderPage from "../pageObjects/FolderPage.js";
+import { Builder } from 'selenium-webdriver';
+import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
+import { expect } from 'chai';
+import { cleanData } from '../support/cleanData.js';
+import { login, createProject, selectRandomFolder } from '../fixtures/helperFunctions.js';
+import genData from '../fixtures/genData.js';
+import Header from '../pageObjects/Header.js';
+import DashboardPage from '../pageObjects/DashboardPage.js';
+import FreeStyleProjectPage from '../pageObjects/FreestyleProjectPage.js';
+import FolderPage from '../pageObjects/FolderPage.js';
 
 describe('US_01.006 | FreestyleProject > Move project', () => {
 

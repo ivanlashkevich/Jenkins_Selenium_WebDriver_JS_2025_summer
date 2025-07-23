@@ -17,9 +17,9 @@ describe('US_00.000 | New Item > Create New item', () => {
     before(async () => {
         driver = await new Builder().forBrowser('chrome').build();
         await driver.manage().setTimeouts({
-            implicit: 3000,    // Ожидание элементов
-            pageLoad: 10000,   // Загрузка страницы
-            script: 5000       // Асинхронные скрипты
+            implicit: 3000,
+            pageLoad: 10000,
+            script: 5000
             });
         // await driver.manage().window().maximize();
     });
@@ -69,7 +69,7 @@ describe('US_00.000 | New Item > Create New item', () => {
         const chevron = await driver.wait(until.elementLocated(By.css('#breadcrumbBar .jenkins-menu-dropdown-chevron')), 5000);
         await driver.wait(until.elementIsVisible(chevron), 3000);
         
-        await driver.executeScript("arguments[0].click();", chevron);
+        await driver.executeScript('arguments[0].click();', chevron);
         await driver.actions().move({ origin: chevron }).pause(500).perform();
         
         const newItemDropdownOption = await driver.wait(until.elementLocated(By.css('.jenkins-dropdown__item[href$="newJob"]')), 5000);

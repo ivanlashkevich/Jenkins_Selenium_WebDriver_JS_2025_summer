@@ -37,8 +37,12 @@ class DashboardPage extends BasePage {
         return projectLink;
     }
 
-    async getProjectTitleLinkElements(name) {
-        return await this.driver.findElements(this.jobTitleLinkLocator(name));
+    async getProjectTitleLinkElements(name, waitForPresence = true) {
+        if (waitForPresence) {
+            return await this.driver.wait(until.elementsLocated(this.jobTitleLinkLocator(name)), 5000);
+        } else {
+            return await this.driver.findElements(this.jobTitleLinkLocator(name));
+        }
     }
 
     async getJobTableText() {

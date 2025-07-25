@@ -49,7 +49,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         await freestyleProjectPage.clickDeleteProjectMenuOption();
         await freestyleProjectPage.clickYesButton();
 
-        const projectTitleLink = await dashboardPage.getProjectTitleLinkElements(project.name);
+        const projectTitleLink = await dashboardPage.getProjectTitleLinkElements(project.name, false);
         expect(projectTitleLink.length).to.equal(0);
 
         const mainPanel = await dashboardPage.waitUntilMainPanelContains('Welcome to Jenkins!');

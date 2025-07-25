@@ -77,7 +77,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         await driver.wait(until.elementIsVisible(jenkinsLink), 5000);
         await jenkinsLink.click();
 
-        const projectTitleLink = await driver.findElements(By.css(`.jenkins-table__link[href$="${project.userName}/"]`));
+        const projectTitleLink = await driver.wait(until.elementsLocated(By.css(`.jenkins-table__link[href$="${project.userName}/"]`)), 5000);
         expect(projectTitleLink.length).to.equal(1);
         expect(await projectTitleLink[0].isDisplayed()).to.be.true;
     });

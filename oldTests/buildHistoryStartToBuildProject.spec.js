@@ -67,7 +67,7 @@ describe('US_08.001 | Build history > Start to build a project', () => {
         }
     });
 
-        it('TC_08.001.02 | Verify user can trigger a project build from the Project page using "Build Now" option', async () => {
+    it('TC_08.001.02 | Verify user can trigger a project build from the Project page using "Build Now" option', async () => {
 
         for (const item of projects) {
             const encodedProjectName = encodeURIComponent(item.name);
@@ -90,6 +90,27 @@ describe('US_08.001 | Build history > Start to build a project', () => {
             const jenkinsLink = await driver.wait(until.elementLocated(By.id('jenkins-home-link')), 5000);
             await driver.wait(until.elementIsVisible(jenkinsLink), 5000);
             await jenkinsLink.click();
+        }
+    });
+
+    it('TC_08.001.03 | Verify the information about the new build appears on the Build history page', async () => {
+
+        for (const item of projects) {
+            const encodedProjectName = encodeURIComponent(item.name);
+            const scheduleBuildLink = await driver.wait(until.elementLocated(By.css(`.jenkins-table__cell--tight [href*="${encodedProjectName}"]`)), 5000);
+            await driver.wait(until.elementIsVisible(scheduleBuildLink), 5000);
+            await scheduleBuildLink.click();
+        }
+
+        const buildHistoryLink = await driver.wait(until.elementLocated(By.css('#side-panel [href$="builds"]')), 5000);
+        await driver.wait(until.elementIsVisible(buildHistoryLink), 5000);
+        await buildHistoryLink.click();
+
+        const buildLinks = await driver.findElements(By.className('jenkins-table__badge'));
+        expect(buildLinks.length).to.equal(2);
+
+        for (const buildLink of buildLinks) {
+            expect(await buildLink.isDisplayed()).to.be.true;
         }
     });
 });

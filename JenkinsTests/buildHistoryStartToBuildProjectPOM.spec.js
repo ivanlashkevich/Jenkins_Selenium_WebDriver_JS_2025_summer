@@ -84,4 +84,20 @@ describe('US_08.001 | Build history > Start to build a project', () => {
             await header.clickJenkinsLogo();
         }
     });
+
+    it('TC_08.001.03 | Verify the information about the new build appears on the Build history page', async () => {
+
+        for (const item of projects) {
+            const encodedProjectName = encodeURIComponent(item.name);
+            await dashboardPage.clickScheduleBuildForItem(encodedProjectName)
+        }
+        await dashboardPage.clickBuildHistoryMenuOption();
+
+        const buildHistoryTableBuildLinks = await buildHistoryPage.getBuildHistoryTableBuildLinks();
+        expect(buildHistoryTableBuildLinks.length).to.equal(2);
+
+        for (const buildHistoryTableBuildLink of buildHistoryTableBuildLinks) {
+            expect(await buildHistoryTableBuildLink.isDisplayed()).to.be.true;
+        }
+    });
 });

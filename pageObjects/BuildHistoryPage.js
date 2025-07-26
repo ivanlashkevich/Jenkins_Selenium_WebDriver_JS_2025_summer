@@ -16,6 +16,9 @@ class BuildHistoryPage extends BasePage {
         return buildHistoryTableBuildLink;
     }
 
+    async getBuildHistoryTableBuildLinks() {
+        return await this.driver.findElements(this.buildHistoryTableBuildLinkBadgeLocator);
+    }
 
 }
 

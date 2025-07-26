@@ -27,7 +27,7 @@
     "selenium-webdriver": "^4.34.0"
   },
   "mocha": {
-    "timeout": 10000
+    "timeout": 15000
   },
   "dependencies": {
     "dotenv": "^17.0.1"

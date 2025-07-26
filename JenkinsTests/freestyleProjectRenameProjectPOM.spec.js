@@ -84,8 +84,7 @@ describe('US_01.002 | FreestyleProject > Rename Project', () => {
         await freestyleProjectPage.fillNewItemName(projectNameInvalid);
         await freestyleProjectPage.removeFocusFromInput();
 
-        const oldErrorMessage = await freestyleProjectPage.getNewNameError();
-        const newErrorMessage = await freestyleProjectPage.waitForErrorMessageUpdate(oldErrorMessage);
+        const newErrorMessage = await freestyleProjectPage.waitForErrorMessageUpdate();
         const errorMessageText = await newErrorMessage.getText();
         expect(await newErrorMessage.isDisplayed()).to.be.true;
         expect(errorMessageText).to.contain(renameItem.specialCharactersInNameError);

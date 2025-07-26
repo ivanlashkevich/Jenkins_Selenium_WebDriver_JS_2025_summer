@@ -136,8 +136,19 @@ class BasePage extends Header {
         return await this.driver.wait(until.elementLocated(this.newNameErrorMessageLocator), 5000);
     }
 
-    async waitForErrorMessageUpdate(oldErrorMessage) {
-        await this.driver.wait(until.stalenessOf(oldErrorMessage), 5000);
+    async waitForErrorMessageUpdate() {
+        let oldErrorMessage;
+        try {
+            oldErrorMessage = await this.driver.findElement(this.newNameErrorMessageLocator);
+        } catch (err) {
+            oldErrorMessage = null;
+        }
+        if (oldErrorMessage) {
+            try {
+                await this.driver.wait(until.stalenessOf(oldErrorMessage), 5000);
+            } catch (err) {
+            }
+        }
         const newErrorMessage = await this.driver.wait(until.elementLocated(this.newNameErrorMessageLocator), 5000);
         await this.driver.wait(until.elementIsVisible(newErrorMessage), 5000);
         return newErrorMessage;

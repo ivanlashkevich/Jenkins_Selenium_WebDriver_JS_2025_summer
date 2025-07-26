@@ -18,6 +18,12 @@ class DashboardPage extends BasePage {
         await this.driver.actions().move({ origin: name }).pause(1000).perform();
     }
 
+    async clickJobTitleLink(name) {
+        const jobTitleLink = await this.driver.wait(until.elementLocated(this.jobTitleLinkLocator(name)), 5000);
+        await this.driver.wait(until.elementIsVisible(jobTitleLink), 5000);
+        await this.driver.actions().move({ origin: jobTitleLink }).click().perform();
+    }
+
     async clickJobTableDropdownChevron(name) {
         const chevron = await this.driver.wait(until.elementLocated(this.jobTableDropdownChevronLocator(name)), 5000);
         await this.driver.wait(until.elementIsVisible(chevron), 3000);

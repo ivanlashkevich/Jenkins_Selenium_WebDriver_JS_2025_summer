@@ -23,6 +23,7 @@ class BasePage extends Header {
         this.renameButtonLocator = By.css('button[name="Submit"]');
         this.newNameErrorMessageLocator = By.className('error');
         this.buildScheduledNotificationLocator = By.className('tippy-content');
+        this.buildHistoryFrameBuildLinkLocator = By.css('#buildHistory .build-link.display-name');
         
     }
 
@@ -171,7 +172,11 @@ class BasePage extends Header {
         return mainPanel;
     }
 
-
+    async getBuildHistoryFrameBuildLink() {
+        const buildHistoryFrameBuildLink = await this.driver.wait(until.elementLocated(this.buildHistoryFrameBuildLinkLocator), 10000);
+        await this.driver.wait(until.elementIsVisible(buildHistoryFrameBuildLink), 10000);
+        return buildHistoryFrameBuildLink;
+    }
 
 }
 

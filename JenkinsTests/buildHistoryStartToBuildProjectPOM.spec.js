@@ -67,4 +67,21 @@ describe('US_08.001 | Build history > Start to build a project', () => {
             await header.clickJenkinsLogo();
         }
     });
+
+    it('TC_08.001.02 | Verify user can trigger a project build from the Project page using "Build Now" option', async () => {
+
+        for (const item of projects) {
+            const encodedProjectName = encodeURIComponent(item.name);
+            await dashboardPage.clickJobTitleLink(encodedProjectName);
+            await basePage.clickBuildNowMenuOption();
+
+            const buildScheduledNotification = await basePage.waitForBuildScheduledNotification();
+            expect(await buildScheduledNotification.isDisplayed()).to.be.true;
+
+            const buildHistoryFrameBuildLink = await basePage.getBuildHistoryFrameBuildLink();
+            expect(await buildHistoryFrameBuildLink.isDisplayed()).to.be.true;
+
+            await header.clickJenkinsLogo();
+        }
+    });
 });

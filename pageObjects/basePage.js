@@ -7,6 +7,8 @@ class BasePage extends Header {
         super(driver);
         this.driver = driver;
         this.newItemMenuOptionLocator = By.css('#side-panel [href$="newJob"]');
+        this.buildHistoryMenuOptionLocator = By.css('#side-panel [href$="builds"]');
+        this.buildNowMenuOptionLocator = By.css('#side-panel [href*="build?"]');
         this.configureMenuOptionLocator = By.css('#side-panel [href$="configure"]');
         this.moveMenuOptionLocator = By.css('#side-panel [href$="move"]');
         this.renameMenuOptionLocator = By.css('#side-panel [href$="rename"]');
@@ -20,6 +22,7 @@ class BasePage extends Header {
         this.moveButtonLocator = By.css('button[name="Submit"]');
         this.renameButtonLocator = By.css('button[name="Submit"]');
         this.newNameErrorMessageLocator = By.className('error');
+        this.buildScheduledNotificationLocator = By.className('tippy-content');
         
     }
 
@@ -30,11 +33,25 @@ class BasePage extends Header {
         await element.click();
     }
 
+    async clickBuildHistoryMenuOption() {
+        await this.driver.wait(until.elementLocated(this.buildHistoryMenuOptionLocator), 5000);
+        const buildHistoryMenuOption = await this.driver.findElement(this.buildHistoryMenuOptionLocator);
+        await this.driver.wait(until.elementIsVisible(buildHistoryMenuOption), 5000);
+        await buildHistoryMenuOption.click();
+    }
+
     async clickConfigureMenuOption() {
         await this.driver.wait(until.elementLocated(this.configureMenuOptionLocator), 5000);
         const configureMenuOption = await this.driver.findElement(this.configureMenuOptionLocator);
         await this.driver.wait(until.elementIsVisible(configureMenuOption), 5000);
         await configureMenuOption.click();
+    }
+
+    async clickBuildNowMenuOption() {
+        await this.driver.wait(until.elementLocated(this.buildNowMenuOptionLocator), 5000);
+        const buildNowMenuOption = await this.driver.findElement(this.buildNowMenuOptionLocator);
+        await this.driver.wait(until.elementIsVisible(buildNowMenuOption), 5000);
+        await buildNowMenuOption.click();
     }
 
     async clickMoveMenuOption() {
@@ -123,6 +140,24 @@ class BasePage extends Header {
         const newErrorMessage = await this.driver.wait(until.elementLocated(this.newNameErrorMessageLocator), 5000);
         await this.driver.wait(until.elementIsVisible(newErrorMessage), 5000);
         return newErrorMessage;
+    }
+
+    async waitForBuildScheduledNotification() {
+        let oldBuildScheduleNotification;
+        try {
+            oldBuildScheduleNotification = await this.driver.findElement(this.buildScheduledNotificationLocator);
+        } catch (err) {
+            oldBuildScheduleNotification = null;
+        }
+        if (oldBuildScheduleNotification) {
+            try {
+                await this.driver.wait(until.stalenessOf(oldBuildScheduleNotification), 2000);
+            } catch (err) {
+            }
+        }
+        const newBuildScheduleNotification = await this.driver.wait(until.elementLocated(this.buildScheduledNotificationLocator), 5000);
+        await this.driver.wait(until.elementIsVisible(newBuildScheduleNotification), 5000);
+        return newBuildScheduleNotification;
     }
 
     async getMainPanelHeadlineElementText() {

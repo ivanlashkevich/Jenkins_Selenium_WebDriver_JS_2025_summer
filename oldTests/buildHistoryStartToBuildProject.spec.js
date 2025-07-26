@@ -66,4 +66,30 @@ describe('US_08.001 | Build history > Start to build a project', () => {
             await jenkinsLink.click();
         }
     });
+
+        it('TC_08.001.02 | Verify user can trigger a project build from the Project page using "Build Now" option', async () => {
+
+        for (const item of projects) {
+            const encodedProjectName = encodeURIComponent(item.name);
+            const projectLink = await driver.wait(until.elementLocated(By.css(`.jenkins-table__link[href$="${encodedProjectName}/"]`)), 5000);
+            await driver.wait(until.elementIsVisible(projectLink), 5000);
+            await driver.actions().move({ origin: projectLink }).click().perform();
+
+            const buildNowLink = await driver.wait(until.elementLocated(By.css('#side-panel [href*="build?"]')), 5000);
+            await driver.wait(until.elementIsVisible(buildNowLink), 5000);
+            await buildNowLink.click();
+
+            const buildScheduledNotification = await driver.wait(until.elementLocated(By.className('tippy-content')), 5000);
+            await driver.wait(until.elementIsVisible(buildScheduledNotification), 5000);
+            expect(await buildScheduledNotification.isDisplayed()).to.be.true;
+
+            const buildHistoryFrameBuildLink = await driver.wait(until.elementLocated(By.css('#buildHistory .build-link.display-name')), 10000);
+            await driver.wait(until.elementIsVisible(buildHistoryFrameBuildLink), 10000);
+            expect(await buildHistoryFrameBuildLink.isDisplayed()).to.be.true;
+
+            const jenkinsLink = await driver.wait(until.elementLocated(By.id('jenkins-home-link')), 5000);
+            await driver.wait(until.elementIsVisible(jenkinsLink), 5000);
+            await jenkinsLink.click();
+        }
+    });
 });

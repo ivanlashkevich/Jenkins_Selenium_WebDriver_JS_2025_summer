@@ -5,12 +5,14 @@ import { cleanData } from '../support/cleanData.js';
 import genData from '../fixtures/genData.js';
 import { login, createProject } from '../fixtures/helperFunctions.js';
 import placeholderMessage from '../fixtures/projectPageData.json' assert { type: 'json' };
+import message from '../fixtures/buildPageData.json' assert { type: 'json' };
 
 describe('US_08.002 | Build history > Delete Build', () => {
 
     let driver;
     let project;
     const { noBuildsPlaceholderMessage } = placeholderMessage;
+    const { deleteBuildMessage } = message;
 
     before(async () => {
         driver = await new Builder().forBrowser('chrome').build();
@@ -99,4 +101,19 @@ describe('US_08.002 | Build history > Delete Build', () => {
         expect(await noBuildsPlaceholder.isDisplayed()).to.be.true;
     });
 
+    it('TC_08.002.03 | Verify the display of the confirmation message before deleting a build', async () => {
+
+        const buildHistoryFrameBuildLink = await driver.wait(until.elementLocated(By.css('#buildHistory .build-link.display-name')), 10000);
+        await driver.wait(until.elementIsVisible(buildHistoryFrameBuildLink), 10000);
+        await driver.executeScript('arguments[0].click();', buildHistoryFrameBuildLink);
+
+        const deleteBuildLink = await driver.wait(until.elementLocated(By.css('#side-panel [href$="confirmDelete"]')), 5000);
+        await driver.wait(until.elementIsVisible(deleteBuildLink), 5000);
+        await deleteBuildLink.click();
+
+        const deleteBuildConfirmationMessage = await driver.wait(until.elementLocated(By.css('#main-panel form span')), 5000);
+        await driver.wait(until.elementIsVisible(deleteBuildConfirmationMessage), 5000);
+        expect(await deleteBuildConfirmationMessage.isDisplayed()).to.be.true;
+        expect(await deleteBuildConfirmationMessage.getText()).to.contain(deleteBuildMessage);
+    });
 });

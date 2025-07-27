@@ -60,4 +60,43 @@ describe('US_08.002 | Build history > Delete Build', () => {
         expect(await noBuildsPlaceholder.isDisplayed()).to.be.true;
     });
 
+    it('TC_08.002.02 | Verify user can delete a build from the Build History page', async () => {
+
+        const dashboardLink = await driver.wait(until.elementLocated(By.css('#breadcrumbs [href="/"]')), 5000);
+        await driver.wait(until.elementIsVisible(dashboardLink), 5000);
+        await driver.actions().move({ origin: dashboardLink }).perform();
+        const chevron = await driver.wait(until.elementLocated(By.css('#breadcrumbs [href="/"] .jenkins-menu-dropdown-chevron')), 5000);
+        await driver.wait(until.elementIsVisible(chevron), 5000);
+
+        await driver.executeScript('arguments[0].click();', chevron);
+        await driver.actions().move({ origin: chevron }).perform();
+
+        const buildHistoryDropdownOption = await driver.wait(until.elementLocated(By.css('.jenkins-dropdown__item[href$="builds"]')), 5000);
+        await driver.wait(until.elementIsVisible(buildHistoryDropdownOption), 5000);
+        await driver.wait(until.elementIsEnabled(buildHistoryDropdownOption), 5000);
+        await buildHistoryDropdownOption.click();
+
+        const projectBuildLink = await driver.wait(until.elementLocated(By.css(`[href$="${project.userName}/"] + .jenkins-table__badge`)), 5000);
+        await driver.wait(until.elementIsVisible(projectBuildLink), 5000);
+        await driver.actions().move({ origin: projectBuildLink }).perform();
+        const projectBuildChevron = await driver.wait(until.elementLocated(By.css(`[href$="${project.userName}/"] + .jenkins-table__badge .jenkins-menu-dropdown-chevron`)), 5000);
+        await driver.wait(until.elementIsVisible(projectBuildChevron), 5000);
+
+        await driver.executeScript('arguments[0].click();', projectBuildChevron);
+        await driver.actions().move({ origin: projectBuildChevron }).perform();
+
+        const deleteBuildDropdownOption = await driver.wait(until.elementLocated(By.css('.jenkins-dropdown__item[href$="confirmDelete"]')), 5000);
+        await driver.wait(until.elementIsVisible(deleteBuildDropdownOption), 5000);
+        await deleteBuildDropdownOption.click();
+
+        const deleteButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
+        await driver.wait(until.elementIsVisible(deleteButton), 5000);
+        await deleteButton.click();
+
+        const noBuildsPlaceholder = await driver.wait(until.elementLocated(By.id('no-builds')), 5000);
+        await driver.wait(until.elementIsVisible(noBuildsPlaceholder), 5000);
+        expect(await noBuildsPlaceholder.getText()).to.contain(noBuildsPlaceholderMessage);
+        expect(await noBuildsPlaceholder.isDisplayed()).to.be.true;
+    });
+
 });

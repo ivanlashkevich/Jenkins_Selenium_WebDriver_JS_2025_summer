@@ -67,9 +67,9 @@ describe('US_08.002 | Build history > Delete Build', () => {
         const dashboardLink = await driver.wait(until.elementLocated(By.css('#breadcrumbs [href="/"]')), 5000);
         await driver.wait(until.elementIsVisible(dashboardLink), 5000);
         await driver.actions().move({ origin: dashboardLink }).perform();
+
         const chevron = await driver.wait(until.elementLocated(By.css('#breadcrumbs [href="/"] .jenkins-menu-dropdown-chevron')), 5000);
         await driver.wait(until.elementIsVisible(chevron), 5000);
-
         await driver.executeScript('arguments[0].click();', chevron);
         await driver.actions().move({ origin: chevron }).perform();
 
@@ -81,9 +81,9 @@ describe('US_08.002 | Build history > Delete Build', () => {
         const projectBuildLink = await driver.wait(until.elementLocated(By.css(`[href$="${project.userName}/"] + .jenkins-table__badge`)), 5000);
         await driver.wait(until.elementIsVisible(projectBuildLink), 5000);
         await driver.actions().move({ origin: projectBuildLink }).perform();
+
         const projectBuildChevron = await driver.wait(until.elementLocated(By.css(`[href$="${project.userName}/"] + .jenkins-table__badge .jenkins-menu-dropdown-chevron`)), 5000);
         await driver.wait(until.elementIsVisible(projectBuildChevron), 5000);
-
         await driver.executeScript('arguments[0].click();', projectBuildChevron);
         await driver.actions().move({ origin: projectBuildChevron }).perform();
 

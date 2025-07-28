@@ -69,4 +69,18 @@ describe('US_08.002 | Build history > Delete Build', () => {
         expect(await noBuildsPlaceholder.isDisplayed()).to.be.true;
     });
 
+    it('TC_08.002.02 | Verify user can delete a build from the Build History page', async () => {
+
+        await header.hoverDashboardBreadcrumbLink();
+        await header.clickDashhboardBreadcrumbChevron();
+        await header.clickBuildHistoryDropdownMenuItem();
+        await buildHistoryPage.hoverProjectBuildLink(project.userName);
+        await buildHistoryPage.clickProjectBuildChevron(project.userName);
+        await buildHistoryPage.clickDeleteBuildDropdownMenuItem();
+        await confirmDeleteBuildPage.clickDeleteButton();
+
+        const noBuildsPlaceholder = await freestyleProjectPage.getNoBuildsPlaceholder();
+        expect(await noBuildsPlaceholder.getText()).to.contain(noBuildsPlaceholderMessage);
+        expect(await noBuildsPlaceholder.isDisplayed()).to.be.true;
+    });
 });

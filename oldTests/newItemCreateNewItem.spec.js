@@ -65,12 +65,12 @@ describe('US_00.000 | New Item > Create New item', () => {
     it('TC_00.000.02 | Verify a new item is created via the Dashboard dropdown menu', async() => {
 
         const dashboardLink = await driver.findElement(By.css('.jenkins-breadcrumbs__list-item'));
-        await driver.actions().move({ origin: dashboardLink }).pause(1000).perform();
+        await driver.actions().move({ origin: dashboardLink }).perform();
+
         const chevron = await driver.wait(until.elementLocated(By.css('#breadcrumbBar .jenkins-menu-dropdown-chevron')), 5000);
         await driver.wait(until.elementIsVisible(chevron), 3000);
-        
         await driver.executeScript('arguments[0].click();', chevron);
-        await driver.actions().move({ origin: chevron }).pause(500).perform();
+        await driver.actions().move({ origin: chevron }).perform();
         
         const newItemDropdownOption = await driver.wait(until.elementLocated(By.css('.jenkins-dropdown__item[href$="newJob"]')), 5000);
         await driver.wait(until.elementIsVisible(newItemDropdownOption), 5000);

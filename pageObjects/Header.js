@@ -5,9 +5,10 @@ class Header {
     constructor(driver) {
         this.driver = driver;
         this.jenkinsLogoLocator = By.id('jenkins-home-link');
-        this.dashboardBreadcrumbLinkLocator = By.className('jenkins-breadcrumbs__list-item');
-        this.dashboardBreadcrumbChevronLocator = By.css('#breadcrumbBar .jenkins-menu-dropdown-chevron');
-        this.newItemDropdownOptionLocator = By.css('.jenkins-dropdown__item[href$="newJob"]');
+        this.dashboardBreadcrumbLinkLocator = By.css('#breadcrumbs [href="/"]');
+        this.dashboardBreadcrumbChevronLocator = By.css('#breadcrumbs [href="/"] .jenkins-menu-dropdown-chevron');
+        this.newItemDropdownMenuItemLocator = By.css('.jenkins-dropdown__item[href$="newJob"]');
+        this.buildHistoryDropdownMenuItemLocator = By.css('.jenkins-dropdown__item[href$="builds"]');
         this.jobTableLocator = By.className('jenkins-table');
         this.breadcrumbsFolderNameLocator = (folderName ) => By.linkText(folderName);
 
@@ -22,22 +23,29 @@ class Header {
 
     async hoverDashboardBreadcrumbLink() {
         const dashboardLink = await this.driver.wait(until.elementLocated(this.dashboardBreadcrumbLinkLocator), 5000);
-        await this.driver.actions().move({ origin: dashboardLink }).pause(1000).perform();
-        const chevron = await this.driver.wait(until.elementLocated(this.dashboardBreadcrumbChevronLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(chevron), 3000);
+        await this.driver.wait(until.elementIsVisible(dashboardLink), 5000);
+        await this.driver.actions().move({ origin: dashboardLink }).perform();
     }
 
     async clickDashhboardBreadcrumbChevron() {
         const chevron = await this.driver.wait(until.elementLocated(this.dashboardBreadcrumbChevronLocator), 5000);
+        await this.driver.wait(until.elementIsVisible(chevron), 3000);
         await this.driver.executeScript('arguments[0].click();', chevron);
-        await this.driver.actions().move({ origin: chevron }).pause(500).perform();
+        await this.driver.actions().move({ origin: chevron }).perform();
     }
 
     async clickNewItemDropdownMenuItem() {
-        const newItemDropdownOption = await this.driver.wait(until.elementLocated(this.newItemDropdownOptionLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(newItemDropdownOption), 5000);
-        await this.driver.wait(until.elementIsEnabled(newItemDropdownOption), 5000);
-        await newItemDropdownOption.click();
+        const newItemDropdownMenuItem = await this.driver.wait(until.elementLocated(this.newItemDropdownMenuItemLocator), 5000);
+        await this.driver.wait(until.elementIsVisible(newItemDropdownMenuItem), 5000);
+        await this.driver.wait(until.elementIsEnabled(newItemDropdownMenuItem), 5000);
+        await newItemDropdownMenuItem.click();
+    }
+
+    async clickBuildHistoryDropdownMenuItem() {
+        const buildHistoryDropdownMenuItem = await this.driver.wait(until.elementLocated(this.buildHistoryDropdownMenuItemLocator), 5000);
+        await this.driver.wait(until.elementIsVisible(buildHistoryDropdownMenuItem), 5000);
+        await this.driver.wait(until.elementIsEnabled(buildHistoryDropdownMenuItem), 5000);
+        await buildHistoryDropdownMenuItem.click();
     }
 
     async clickBreadcrumbsFolderName(folderName) {

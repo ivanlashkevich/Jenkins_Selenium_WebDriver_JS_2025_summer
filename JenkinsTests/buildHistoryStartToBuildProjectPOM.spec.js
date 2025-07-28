@@ -1,4 +1,4 @@
-import { Builder, By, until } from 'selenium-webdriver';
+import { Builder } from 'selenium-webdriver';
 import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
 import { expect } from 'chai';
 import { cleanData } from '../support/cleanData.js';

@@ -24,6 +24,7 @@ class BasePage extends Header {
         this.newNameErrorMessageLocator = By.className('error');
         this.buildScheduledNotificationLocator = By.className('tippy-content');
         this.buildHistoryFrameBuildLinkLocator = By.css('#buildHistory .build-link.display-name');
+        this.noBuildsPlaceholderLocator = By.id('no-builds');
         
     }
 
@@ -39,6 +40,12 @@ class BasePage extends Header {
         const buildHistoryMenuOption = await this.driver.findElement(this.buildHistoryMenuOptionLocator);
         await this.driver.wait(until.elementIsVisible(buildHistoryMenuOption), 5000);
         await buildHistoryMenuOption.click();
+    }
+
+    async clickBuildHistoryFrameBuildLink() {
+        const buildHistoryFrameBuildLink = await this.driver.wait(until.elementLocated(this.buildHistoryFrameBuildLinkLocator), 10000);
+        await this.driver.wait(until.elementIsVisible(buildHistoryFrameBuildLink), 10000);
+        await this.driver.executeScript('arguments[0].click();', buildHistoryFrameBuildLink);
     }
 
     async clickConfigureMenuOption() {
@@ -187,6 +194,12 @@ class BasePage extends Header {
         const buildHistoryFrameBuildLink = await this.driver.wait(until.elementLocated(this.buildHistoryFrameBuildLinkLocator), 10000);
         await this.driver.wait(until.elementIsVisible(buildHistoryFrameBuildLink), 10000);
         return buildHistoryFrameBuildLink;
+    }
+
+    async getNoBuildsPlaceholder() {
+        const noBuildsPlaceholder = await this.driver.wait(until.elementLocated(this.noBuildsPlaceholderLocator), 5000);
+        await this.driver.wait(until.elementIsVisible(noBuildsPlaceholder), 5000);
+        return noBuildsPlaceholder;
     }
 
 }

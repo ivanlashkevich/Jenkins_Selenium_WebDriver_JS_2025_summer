@@ -83,4 +83,14 @@ describe('US_08.002 | Build history > Delete Build', () => {
         expect(await noBuildsPlaceholder.getText()).to.contain(noBuildsPlaceholderMessage);
         expect(await noBuildsPlaceholder.isDisplayed()).to.be.true;
     });
+
+    it('TC_08.002.03 | Verify the display of the confirmation message before deleting a build', async () => {
+
+        await freestyleProjectPage.clickBuildHistoryFrameBuildLink();
+        await buildPage.clickDeleteBuildMenuOption();
+
+        const deleteBuildConfirmationMessage = await confirmDeleteBuildPage.getDeleteBuildMessage();
+        expect(await deleteBuildConfirmationMessage.isDisplayed()).to.be.true;
+        expect(await deleteBuildConfirmationMessage.getText()).to.contain(deleteBuildMessage);
+    });
 });

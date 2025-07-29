@@ -1,4 +1,5 @@
 import { Builder } from 'selenium-webdriver';
+import chrome from 'selenium-webdriver/chrome.js';
 import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
 import { expect } from 'chai';
 import { cleanData } from '../support/cleanData.js';
@@ -17,13 +18,19 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
     let dashboardPage;
     let freestyleProjectPage;
     let folderPage;
+    const options = new chrome.Options();
+    options.addArguments('--headless=new');
+    options.addArguments('--window-size=1920,1080');
+    options.addArguments('--no-sandbox');
+    options.addArguments('--disable-dev-shm-usage');
+    options.addArguments('--disable-gpu'); 
 
     before(async () => {
-        driver = await new Builder().forBrowser('chrome').build();
+        driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
         await driver.manage().setTimeouts({
-            implicit: 3000,    // Ожидание элементов
-            pageLoad: 10000,   // Загрузка страницы
-            script: 5000       // Асинхронные скрипты
+            implicit: 3000,
+            pageLoad: 10000,
+            script: 5000
         });
     });
 

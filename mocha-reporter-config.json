@@ -1,0 +1,10 @@
+{
+  "reporterEnabled": "mocha-junit-reporter, allure-mocha",
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "reports/junit/test-results-[hash].xml",
+    "toConsole": true
+  },
+  "allureMochaReporterOptions": {
+    "resultsDir": "allure-results"
+  }
+}

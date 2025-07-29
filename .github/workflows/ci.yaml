@@ -77,11 +77,7 @@ jobs:
         run: chmod +x ./.github/wait-for-jenkins.sh && ./.github/wait-for-jenkins.sh
 
       - name: Run Mocha + Selenium tests (JUnit + Allure results)
-        run: |
-          mkdir -p reports/junit allure-results
-          npx mocha "JenkinsTests/**/*.spec.js" \
-            --reporter mocha-multi-reporters \
-            --reporter-options configFile=mocha-reporter-config.json || true
+        run: npm run test:JenkinsTests || true
 
       - name: Create test summary
         uses: test-summary/action@v1.0

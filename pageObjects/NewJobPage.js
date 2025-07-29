@@ -31,11 +31,22 @@ class NewJobPage extends BasePage {
     }
 
     async waitNameValidationMessage() {
-        const validationMessage = await this.driver.wait(until.elementLocated(this.nameValidationMessageLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(validationMessage), 5000);
-        return validationMessage;
+        let oldValidationMessage;
+        try {
+            oldValidationMessage = await this.driver.findElement(this.nameValidationMessageLocator);
+        } catch (err) {
+            oldValidationMessage = null;
+        }
+        if (oldValidationMessage) {
+            try {
+                await this.driver.wait(until.stalenessOf(oldValidationMessage), 500);
+            } catch (err) {
+            }
+        }
+        const newValidationMessage = await this.driver.wait(until.elementLocated(this.nameValidationMessageLocator), 3000);
+        await this.driver.wait(until.elementIsVisible(newValidationMessage), 3000);
+        return newValidationMessage;
     }
-
     
 }
 

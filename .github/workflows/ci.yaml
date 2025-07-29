@@ -5,6 +5,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: write
+  checks: write
+  pages: write
+
 jobs:
   run-test:
     name: 'Run Selenium + Mocha tests'
@@ -52,6 +57,7 @@ jobs:
         run: |
           tar -xvf ./jenkins_backup.tar
           HOME_DIR=$(find . -type d -name "jenkins_home" | head -n 1)
+          HOME_DIR=$(realpath "$HOME_DIR")
           echo "Found Jenkins home at: $HOME_DIR"
           chmod -R 777 "$HOME_DIR"
           echo "JENKINS_HOME=$HOME_DIR" >> $GITHUB_ENV
@@ -60,9 +66,12 @@ jobs:
       #   run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
       - name: Docker start Jenkins container
-        run: docker run --rm --detach -p 8080:8080 -p 50000:50000 \
-          -v ${{ env.JENKINS_HOME }}:/var/jenkins_home \
-          jenkins/jenkins:2.462.3-lts-jdk17
+        run: |
+          echo "JENKINS_HOME is ${{ env.JENKINS_HOME }}"
+          docker run --rm --detach \
+            -p 8080:8080 -p 50000:50000 \
+            -v "${{ env.JENKINS_HOME }}:/var/jenkins_home" \
+            jenkins/jenkins:2.462.3-lts-jdk17
 
       - name: Wait for Jenkins to be ready
         run: chmod +x ./.github/wait-for-jenkins.sh && ./.github/wait-for-jenkins.sh
@@ -72,22 +81,20 @@ jobs:
           mkdir -p reports/junit allure-results
           npx mocha "JenkinsTests/**/*.spec.js" \
             --reporter mocha-multi-reporters \
-            --reporter-options configFile=mocha-reporter-config.json
+            --reporter-options configFile=mocha-reporter-config.json || true
 
-      # Публикуем JUnit (для GitHub UI — аннотации фейлов)
       - name: Create test summary
         uses: test-summary/action@v1.0
         if: always()
         with:
-          paths: reports/junit/*.xml
+          paths: reports/junit/test-results-*.xml
 
       - name: Publish test results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: "reports/junit/*.xml"
+          files: "reports/junit/test-results-*.xml"
 
-      # Генерация и публикация Allure-отчёта
       - name: Generate Allure Report
         uses: simple-elf/allure-report-action@v1.11
         if: always()
@@ -102,8 +109,9 @@ jobs:
           name: allure-report
           path: allure-report
 
+      # Публикуем Allure на gh-pages только при PR и ручном запуске
       - name: Deploy latest Allure report to GitHub Pages
-        if: always()
+        if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -111,7 +119,6 @@ jobs:
           publish_dir: allure-report
           force_orphan: true
 
-      # Скриншоты Selenium в случае фейлов
       - name: Upload screenshots on failure
         if: failure()
         uses: actions/upload-artifact@v4

@@ -10,7 +10,7 @@ import message from '../fixtures/buildPageData.json' assert { type: 'json' };
 import BasePage from '../pageObjects/basePage.js';
 import FreestyleProjectPage from '../pageObjects/FreestyleProjectPage.js';
 import BuildPage from '../pageObjects/BuildPage.js';
-import ConfirmDeleteBuildPage from '../pageObjects/confirmDeleteBuildPage.js'
+import ConfirmDeleteBuildPage from '../pageObjects/ConfirmDeleteBuildPage.js';
 import BuildHistoryPage from '../pageObjects/BuildHistoryPage.js';
 import Header from '../pageObjects/Header.js';
 

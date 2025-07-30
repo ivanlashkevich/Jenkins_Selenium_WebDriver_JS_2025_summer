@@ -106,7 +106,7 @@ describe('US_08.001 | Build history > Start to build a project', () => {
         await driver.wait(until.elementIsVisible(buildHistoryLink), 5000);
         await buildHistoryLink.click();
 
-        const buildLinks = await driver.findElements(By.className('jenkins-table__badge'));
+        const buildLinks = await driver.wait(until.elementsLocated(By.className('jenkins-table__badge')), 5000);
         expect(buildLinks.length).to.equal(2);
 
         for (const buildLink of buildLinks) {

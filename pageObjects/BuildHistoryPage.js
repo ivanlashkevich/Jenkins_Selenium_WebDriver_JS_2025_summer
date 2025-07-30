@@ -20,7 +20,7 @@ class BuildHistoryPage extends BasePage {
     }
 
     async getBuildHistoryTableBuildLinks() {
-        return await this.driver.findElements(this.buildHistoryTableBuildLinkBadgeLocator);
+        return await this.driver.wait(until.elementsLocated(this.buildHistoryTableBuildLinkBadgeLocator), 5000);
     }
 
     async hoverProjectBuildLink(name) {

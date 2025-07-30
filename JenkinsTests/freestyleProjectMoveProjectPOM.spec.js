@@ -79,8 +79,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
     it('TC_01.006.02 | Verify a project can be moved to one of the existing folders from the Dashboard page', async () => {
 
         await header.clickJenkinsLogo();
-        let projectLink = await dashboardPage.getProjectLinkElement(project.userName);
-        await dashboardPage.hoverJobTitleLink(projectLink);
+        await dashboardPage.hoverJobTitleLink(await dashboardPage.getProjectLinkElement(project.userName));
         await dashboardPage.clickJobTableDropdownChevron(project.userName);
         await dashboardPage.clickMoveDropdownMenuItem();
         const selectedFolder = selectRandomFolder(project);
@@ -88,7 +87,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
         await freestyleProjectPage.clickMoveButton();
         await header.clickBreadcrumbsFolderName(selectedFolder);
 
-        projectLink = await folderPage.getProjectLinkElement(project.userName);;
+        const projectLink = await folderPage.getProjectLinkElement(project.userName);;
         expect(await projectLink.getText()).to.equal(project.userName);
         expect(await projectLink.isDisplayed()).to.be.true;
     });

@@ -4,8 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "clean": "rimraf allure-results allure-report xunit.xml",
-    "test:ci": "npm run clean && mocha --config mocha-reporter-config.json \"JenkinsTests/**/*.spec.js\"",
+    "clean": "rimraf reports allure-results allure-report xunit.xml",
+    "test:ci": "npm run clean && mocha \"JenkinsTests/**/*.spec.js\" --reporter mocha-multi-reporters --reporter-options configFile=mocha-reporter-config.json ",
     "test:JenkinsTests": "npm run clean && mocha --config mocha.json \"JenkinsTests/**/*.spec.js\"",
     "test:oldTests": "npm run clean && mocha --config mocha.json \"oldTests/**/*.spec.js\"",
     "report:generate": "allure generate allure-results --clean -o allure-report",

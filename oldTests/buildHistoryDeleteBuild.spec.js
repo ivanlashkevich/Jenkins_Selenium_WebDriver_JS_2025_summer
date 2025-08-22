@@ -66,30 +66,19 @@ describe('US_08.002 | Build history > Delete Build', () => {
 
         const dashboardLink = await driver.wait(until.elementLocated(By.css('#breadcrumbs [href="/"]')), 5000);
         await driver.wait(until.elementIsVisible(dashboardLink), 5000);
-        await driver.actions().move({ origin: dashboardLink }).perform();
+        await dashboardLink.click();
 
-        const chevron = await driver.wait(until.elementLocated(By.css('#breadcrumbs [href="/"] .jenkins-menu-dropdown-chevron')), 5000);
-        await driver.wait(until.elementIsVisible(chevron), 5000);
-        await driver.executeScript('arguments[0].click();', chevron);
-        await driver.actions().move({ origin: chevron }).perform();
-
-        const buildHistoryDropdownOption = await driver.wait(until.elementLocated(By.css('.jenkins-dropdown__item[href$="builds"]')), 5000);
-        await driver.wait(until.elementIsVisible(buildHistoryDropdownOption), 5000);
-        await driver.wait(until.elementIsEnabled(buildHistoryDropdownOption), 5000);
-        await buildHistoryDropdownOption.click();
+        const buildHistoryLink = await driver.wait(until.elementLocated(By.css('#side-panel [href$="builds"]')), 5000);
+        await driver.wait(until.elementIsVisible(buildHistoryLink), 5000);
+        await buildHistoryLink.click();
 
         const projectBuildLink = await driver.wait(until.elementLocated(By.css(`[href$="${project.userName}/"] + .jenkins-table__badge`)), 5000);
         await driver.wait(until.elementIsVisible(projectBuildLink), 5000);
-        await driver.actions().move({ origin: projectBuildLink }).perform();
+        await driver.executeScript('arguments[0].click();', projectBuildLink);
 
-        const projectBuildChevron = await driver.wait(until.elementLocated(By.css(`[href$="${project.userName}/"] + .jenkins-table__badge .jenkins-menu-dropdown-chevron`)), 5000);
-        await driver.wait(until.elementIsVisible(projectBuildChevron), 5000);
-        await driver.executeScript('arguments[0].click();', projectBuildChevron);
-        await driver.actions().move({ origin: projectBuildChevron }).perform();
-
-        const deleteBuildDropdownOption = await driver.wait(until.elementLocated(By.css('.jenkins-dropdown__item[href$="confirmDelete"]')), 5000);
-        await driver.wait(until.elementIsVisible(deleteBuildDropdownOption), 5000);
-        await deleteBuildDropdownOption.click();
+        const deleteBuildLink = await driver.wait(until.elementLocated(By.css('#side-panel [href$="confirmDelete"]')), 5000);
+        await driver.wait(until.elementIsVisible(deleteBuildLink), 5000);
+        await deleteBuildLink.click();
 
         const deleteButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
         await driver.wait(until.elementIsVisible(deleteButton), 5000);

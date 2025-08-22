@@ -7,7 +7,7 @@ import genData from '../fixtures/genData.js';
 import { login, createProject } from '../fixtures/helperFunctions.js';
 import placeholderMessage from '../fixtures/projectPageData.json' assert { type: 'json' };
 import message from '../fixtures/buildPageData.json' assert { type: 'json' };
-import BasePage from '../pageObjects/basePage.js';
+import DashboardPage from '../pageObjects/DashboardPage.js';
 import FreestyleProjectPage from '../pageObjects/FreestyleProjectPage.js';
 import BuildPage from '../pageObjects/BuildPage.js';
 import ConfirmDeleteBuildPage from '../pageObjects/ConfirmDeleteBuildPage.js';
@@ -18,7 +18,7 @@ describe('US_08.002 | Build history > Delete Build', () => {
 
     let driver;
     let project;
-    let basePage;
+    let dashboardPage;
     let freestyleProjectPage;
     let buildPage;
     let confirmDeleteBuildPage;
@@ -47,7 +47,7 @@ describe('US_08.002 | Build history > Delete Build', () => {
         project = genData.newProject();
         await driver.manage().deleteAllCookies();
         await login(driver);
-        basePage = new BasePage(driver);
+        dashboardPage = new DashboardPage(driver);
         freestyleProjectPage = new FreestyleProjectPage(driver);
         buildPage = new BuildPage(driver);
         confirmDeleteBuildPage = new ConfirmDeleteBuildPage(driver);
@@ -78,12 +78,10 @@ describe('US_08.002 | Build history > Delete Build', () => {
 
     it('TC_08.002.02 | Verify user can delete a build from the Build History page', async () => {
 
-        await header.hoverDashboardBreadcrumbLink();
-        await header.clickDashhboardBreadcrumbChevron();
-        await header.clickBuildHistoryDropdownMenuItem();
-        await buildHistoryPage.hoverProjectBuildLink(project.userName);
-        await buildHistoryPage.clickProjectBuildChevron(project.userName);
-        await buildHistoryPage.clickDeleteBuildDropdownMenuItem();
+        await header.clickDashhboardBreadcrumbLink();
+        await dashboardPage.clickBuildHistoryMenuOption();
+        await buildHistoryPage.clickProjectBuildLink(project.userName);
+        await buildPage.clickDeleteBuildMenuOption();
         await confirmDeleteBuildPage.clickDeleteButton();
 
         const noBuildsPlaceholder = await freestyleProjectPage.getNoBuildsPlaceholder();

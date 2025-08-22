@@ -24,14 +24,12 @@
 4. User is on the Project page.
 
 **Steps:**
-1. Hover over the 'Dashboard' link in the breadcrumbs.
-2. Click on the appeared chevron.
-3. Click on the 'Build History' dropdown option.
-4. Hover over the project build link in the 'Build History of Jenkins' table.
-5. Click on the appeared chevron next to the build.
-6. Click on the 'Delete build' dropdown option.
-7. Click on the 'Delete' button.
-8. Verify the build is no longer displayed in the 'Build History' block.
+1. Click on the 'Dashboard' link in the breadcrumbs.
+2. Click on the 'Build History' link in the side menu.
+3. Click on the project build link in the 'Build History of Jenkins' table.
+4. Click on the 'Delete build' link in the side menu.
+5. Click on the 'Delete' button.
+6. Verify the build is no longer displayed in the 'Build History' block.
 
 
 

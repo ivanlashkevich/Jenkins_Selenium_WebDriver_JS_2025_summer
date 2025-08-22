@@ -9,8 +9,6 @@ class BuildHistoryPage extends BasePage {
         this.buildHistoryTableBuildLinkLocator = (name) => By.css(`[href*="${name}"].jenkins-table__badge`);
         this.buildHistoryTableBuildLinkBadgeLocator = By.className('jenkins-table__badge');
         this.projectBuildLinkLocator = name => By.css(`[href$="${name}/"] + .jenkins-table__badge`);
-        this.projectBuildChevronLocator = name => By.css(`[href$="${name}/"] + .jenkins-table__badge .jenkins-menu-dropdown-chevron`);
-        this.deleteBuildDropdownMenuItemLocator = By.css('.jenkins-dropdown__item[href$="confirmDelete"]');
     }
 
     async getBuildHistoryTableBuildLink(name) {
@@ -23,24 +21,10 @@ class BuildHistoryPage extends BasePage {
         return await this.driver.wait(until.elementsLocated(this.buildHistoryTableBuildLinkBadgeLocator), 5000);
     }
 
-    async hoverProjectBuildLink(name) {
+    async clickProjectBuildLink(name) {
         const projectBuildLink = await this.driver.wait(until.elementLocated(this.projectBuildLinkLocator(name)), 5000);
         await this.driver.wait(until.elementIsVisible(projectBuildLink), 5000);
-        await this.driver.actions().move({ origin: projectBuildLink }).perform();
-    }
-
-    async clickProjectBuildChevron(name) {
-        const projectBuildChevron = await this.driver.wait(until.elementLocated(this.projectBuildChevronLocator(name)), 5000);
-        await this.driver.wait(until.elementIsVisible(projectBuildChevron), 5000);
-        await this.driver.executeScript('arguments[0].click();', projectBuildChevron);
-        await this.driver.actions().move({ origin: projectBuildChevron }).perform();
-    }
-
-    async clickDeleteBuildDropdownMenuItem() {
-        const deleteBuildDropdownMenuItem = await this.driver.wait(until.elementLocated(this.deleteBuildDropdownMenuItemLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(deleteBuildDropdownMenuItem), 5000);
-        await this.driver.wait(until.elementIsEnabled(deleteBuildDropdownMenuItem), 5000);
-        await deleteBuildDropdownMenuItem.click();
+        await this.driver.executeScript('arguments[0].click();', projectBuildLink);
     }
 
 }

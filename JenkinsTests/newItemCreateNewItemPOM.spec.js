@@ -74,11 +74,9 @@ describe('US_00.000 | New Item > Create New item', () => {
         expect(await freestyleProjectPage.getMainPanelHeadlineElementText()).to.contain(project.name);
     });
 
-    it('TC_00.000.02 | Verify a new item is created via the Dashboard dropdown menu', async() => {
+    it('TC_00.000.02 | Verify a new item is created via the "Create a job" link when no jobs exist', async() => {
 
-        await header.hoverDashboardBreadcrumbLink();
-        await header.clickDashhboardBreadcrumbChevron();
-        await header.clickNewItemDropdownMenuItem();
+        await dashboardPage.clickCreateJobLink();
         await newJobPage.typeNewItemName(project.name);
         await newJobPage.selectFreestyleProject();
         await newJobPage.clickOKButton();

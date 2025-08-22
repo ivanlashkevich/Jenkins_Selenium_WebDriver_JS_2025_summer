@@ -62,20 +62,13 @@ describe('US_00.000 | New Item > Create New item', () => {
         expect(headlineText).to.contain(project.name);
     });
 
-    it('TC_00.000.02 | Verify a new item is created via the Dashboard dropdown menu', async() => {
+    it('TC_00.000.02 | Verify a new item is created via the "Create a job" link when no jobs exist', async() => {
 
-        const dashboardLink = await driver.findElement(By.css('.jenkins-breadcrumbs__list-item'));
-        await driver.actions().move({ origin: dashboardLink }).perform();
+        const createJobLink = await driver.wait(until.elementLocated(By.css('.content-block [href="newJob"]')), 5000);
+        await driver.wait(until.elementIsVisible(createJobLink), 5000);
+        await driver.wait(until.elementIsEnabled(createJobLink), 5000);
+        await createJobLink.click();
 
-        const chevron = await driver.wait(until.elementLocated(By.css('#breadcrumbBar .jenkins-menu-dropdown-chevron')), 5000);
-        await driver.wait(until.elementIsVisible(chevron), 3000);
-        await driver.executeScript('arguments[0].click();', chevron);
-        await driver.actions().move({ origin: chevron }).perform();
-        
-        const newItemDropdownOption = await driver.wait(until.elementLocated(By.css('.jenkins-dropdown__item[href$="newJob"]')), 5000);
-        await driver.wait(until.elementIsVisible(newItemDropdownOption), 5000);
-        await driver.wait(until.elementIsEnabled(newItemDropdownOption), 5000);
-        await newItemDropdownOption.click();
         await driver.findElement(By.id('name')).sendKeys(project.name);
         await driver.findElement(By.css('li[class$="FreeStyleProject"]')).click();
 

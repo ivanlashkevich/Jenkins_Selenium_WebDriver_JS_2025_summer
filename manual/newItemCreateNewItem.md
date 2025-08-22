@@ -16,20 +16,19 @@
 
 
 
-## TC_00.000.02 | Verify a new item is created via the Dashboard dropdown menu
+## TC_00.000.02 | Verify a new item is created via the "Create a job" link when no jobs exist
 **Preconditions:**
 1. User is logged in.
 2. User is on main page (dashboard).
 
 **Steps:**
-1. Hover over the dashboard link in the breadcrumbs.
-2. Click on the appeared chevron.
-3. Click on the '+ New Item' dropdown menu option.
-4. Enter an item name into the input field.
-5. Select Freestyle project item type;
-6. Click on the 'OK' button.
-7. Click on the 'Save' button.
-8. Verify the Freestyle project was created.
+1. Click on the 'Create a job' link.
+2. Enter an item name into the input field.
+3. Select Freestyle project item type;
+4. Click on the 'OK' button.
+5. Click on the 'Save' button.
+6. Click on the Jenkins logo.
+7. Verify the Freestyle project was created.
 
 
 

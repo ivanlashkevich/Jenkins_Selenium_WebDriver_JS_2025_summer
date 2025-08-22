@@ -6,12 +6,20 @@ class DashboardPage extends BasePage {
     constructor(driver) {
         super(driver);
         this.driver = driver;
+        this.createJobLinkLocator = By.css('.content-block [href="newJob"]');
         this.jobTableLocator = By.className('jenkins-table');
         this.jobTitleLinkLocator = (name) => By.css(`.jenkins-table__link[href$="${name}/"]`);
         this.jobTableDropdownChevronLocator = (name) => By.css(`.jenkins-table__link[href*="${name}"] .jenkins-menu-dropdown-chevron`);
         this.moveDropdownMenuItemLocator = By.css('.jenkins-dropdown__item[href$="move"]');
         this.scheduleBuildForItemLocator = (name) => By.css(`.jenkins-table__cell--tight [href*="${name}"]`);
 
+    }
+
+    async clickCreateJobLink() {
+        await this.driver.wait(until.elementLocated(this.createJobLinkLocator), 5000);
+        const createJobLink = await this.driver.findElement(this.createJobLinkLocator)
+        await this.driver.wait(until.elementIsVisible(createJobLink), 5000);
+        await createJobLink.click();
     }
 
     async hoverJobTitleLink(name) {

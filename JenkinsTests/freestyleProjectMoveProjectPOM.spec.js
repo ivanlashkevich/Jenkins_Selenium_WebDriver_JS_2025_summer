@@ -23,14 +23,14 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
     options.addArguments('--window-size=1920,1080');
     options.addArguments('--no-sandbox');
     options.addArguments('--disable-dev-shm-usage');
-    options.addArguments('--disable-gpu'); 
+    options.addArguments('--disable-gpu');
 
     before(async () => {
         driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
         await driver.manage().setTimeouts({
-            implicit: 3000,
-            pageLoad: 10000,
-            script: 5000
+            implicit: 0,
+            pageLoad: 20000,
+            script: 10000
         });
     });
 
@@ -61,34 +61,43 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
         await driver.quit();
     });
 
-    it('TC_01.006.01 | Verify a project can be moved to one of the existing folders from the Project page', async () => {
+    describe('A Freestyle project was not moved to a folder', () => {
 
-        await freestyleProjectPage.clickMoveMenuOption();
-        const selectedFolder = selectRandomFolder(project);
-        await freestyleProjectPage.selectDestinationFolder(selectedFolder);
-        await freestyleProjectPage.clickMoveButton();
-        await header.clickBreadcrumbsFolderName(selectedFolder);
+        it('TC_01.006.01 | Verify a project can be moved to one of the existing folders from the Project page', async () => {
 
-        const url = await driver.getCurrentUrl();
-        expect(url).to.contain(encodeURIComponent(selectedFolder));
-        const projectLink = await folderPage.getProjectLinkElement(project.userName);
-        expect(await projectLink.getText()).to.equal(project.userName);
-        expect(await projectLink.isDisplayed()).to.be.true;
+            await freestyleProjectPage.clickMoveMenuOption();
+            const selectedFolder = selectRandomFolder(project);
+            await freestyleProjectPage.selectDestinationFolder(selectedFolder);
+            await freestyleProjectPage.clickMoveButton();
+            await header.clickBreadcrumbsFolderName(selectedFolder);
+
+            const url = await driver.getCurrentUrl();
+            expect(url).to.contain(encodeURIComponent(selectedFolder));
+            const projectLink = await folderPage.getProjectLinkElement(project.userName);
+            expect(await projectLink.getText()).to.equal(project.userName);
+            expect(await projectLink.isDisplayed()).to.be.true;
+        });
     });
 
-    it('TC_01.006.02 | Verify a project can be moved to one of the existing folders from the Dashboard page', async () => {
+    describe('A Freestyle project was moved to a folder', () => {
 
-        await header.clickJenkinsLogo();
-        await dashboardPage.hoverJobTitleLink(await dashboardPage.getProjectLinkElement(project.userName));
-        await dashboardPage.clickJobTableDropdownChevron(project.userName);
-        await dashboardPage.clickMoveDropdownMenuItem();
-        const selectedFolder = selectRandomFolder(project);
-        await freestyleProjectPage.selectDestinationFolder(selectedFolder);
-        await freestyleProjectPage.clickMoveButton();
-        await header.clickBreadcrumbsFolderName(selectedFolder);
+        beforeEach(async () => {
+            await freestyleProjectPage.clickMoveMenuOption();
+            const selectedFolder = selectRandomFolder(project);
+            await freestyleProjectPage.selectDestinationFolder(selectedFolder);
+            await freestyleProjectPage.clickMoveButton();
+        });
 
-        const projectLink = await folderPage.getProjectLinkElement(project.userName);;
-        expect(await projectLink.getText()).to.equal(project.userName);
-        expect(await projectLink.isDisplayed()).to.be.true;
+        it('TC_01.006.02 | Verify a project is moved from a folder to the Dashboard page', async () => {
+
+            await freestyleProjectPage.clickMoveMenuOption();
+            await freestyleProjectPage.selectJenkinsDestinationFolder();
+            await freestyleProjectPage.clickMoveButton();
+            await header.clickJenkinsLogo();
+
+            const projectLink = await folderPage.getProjectLinkElement(project.userName);;
+            expect(await projectLink.getText()).to.equal(project.userName);
+            expect(await projectLink.isDisplayed()).to.be.true;
+        });
     });
 });

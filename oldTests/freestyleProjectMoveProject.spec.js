@@ -6,7 +6,6 @@ import { cleanData } from '../support/cleanData.js';
 import { login, createProject, selectRandomFolder } from '../fixtures/helperFunctions.js';
 import genData from '../fixtures/genData.js';
 
-
 describe('US_01.006 | FreestyleProject > Move project', () => {
 
     let driver;
@@ -15,9 +14,9 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
     before(async () => {
         driver = await new Builder().forBrowser('chrome').build();
         await driver.manage().setTimeouts({
-            implicit: 3000,
-            pageLoad: 10000,
-            script: 5000
+            implicit: 0,
+            pageLoad: 20000,
+            script: 10000
         });
     });
 
@@ -44,57 +43,66 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
         await driver.quit();
     });
 
-    it('TC_01.006.01 | Verify a project can be moved to one of the existing folders from the Project page', async () => {
 
-        await driver.findElement(By.css('#side-panel [href$="move"]')).click();
-        const selectedFolder = selectRandomFolder(project);
-        await new Select(driver.findElement(By.css('select[name="destination"]'))).selectByValue(`/${selectedFolder}`);
+    describe('A Freestyle project was not moved to a folder', () => {
 
-        const moveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
-        await driver.wait(until.elementIsVisible(moveButton), 5000);
-        await driver.wait(until.elementIsEnabled(moveButton), 5000);
-        await moveButton.click();
+        it('TC_01.006.01 | Verify a project can be moved to one of the existing folders from the Project page', async () => {
 
-        const folderLink = await driver.wait(until.elementLocated(By.linkText(selectedFolder)), 5000);
-        await driver.wait(until.elementIsVisible(folderLink), 5000);
-        await driver.actions().move({ origin: folderLink }).click().perform();
-        
-        const url = await driver.getCurrentUrl();
-        expect(url).to.contain(encodeURIComponent(selectedFolder));
+            await driver.findElement(By.css('#side-panel [href$="move"]')).click();
+            const selectedFolder = selectRandomFolder(project);
+            await new Select(driver.findElement(By.css('select[name="destination"]'))).selectByValue(`/${selectedFolder}`);
 
-        const projectLink = await driver.findElement(By.css(`.jenkins-table__link[href$="${project.userName}/"]`));
-        expect(await projectLink.getText()).to.equal(project.userName);
-        expect(await projectLink.isDisplayed()).to.be.true;
+            const moveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
+            await driver.wait(until.elementIsVisible(moveButton), 5000);
+            await driver.wait(until.elementIsEnabled(moveButton), 5000);
+            await moveButton.click();
+
+            const folderLink = await driver.wait(until.elementLocated(By.linkText(selectedFolder)), 5000);
+            await driver.wait(until.elementIsVisible(folderLink), 5000);
+            await driver.actions().move({ origin: folderLink }).click().perform();
+
+            const url = await driver.getCurrentUrl();
+            expect(url).to.contain(encodeURIComponent(selectedFolder));
+
+            const projectLink = await driver.findElement(By.css(`.jenkins-table__link[href$="${project.userName}/"]`));
+            expect(await projectLink.getText()).to.equal(project.userName);
+            expect(await projectLink.isDisplayed()).to.be.true;
+        });
     });
 
-    it('TC_01.006.02 | Verify a project can be moved to one of the existing folders from the Dashboard page', async () => {
+    describe('A Freestyle project was moved to a folder', () => {
 
-        await driver.wait(until.elementLocated(By.id('jenkins-home-link')), 5000);
-        const jenkinsLogo = await driver.findElement(By.id('jenkins-home-link'));
-        await driver.wait(until.elementIsVisible(jenkinsLogo), 5000);
-        await jenkinsLogo.click();
+        beforeEach(async () => {
+            await driver.findElement(By.css('#side-panel [href$="move"]')).click();
+            const selectedFolder = selectRandomFolder(project);
+            await new Select(driver.findElement(By.css('select[name="destination"]'))).selectByValue(`/${selectedFolder}`);
 
-        let projectLink = await driver.findElement(By.css(`.jenkins-table__link[href*="${project.userName}"]`));
-        await driver.actions().move({ origin: projectLink }).pause(1000).perform();
-        const chevron = await driver.wait(until.elementLocated(By.css(`.jenkins-table__link[href*="${project.userName}"] .jenkins-menu-dropdown-chevron`)), 5000);
-        await driver.wait(until.elementIsVisible(chevron), 3000);
-        await chevron.click();
+            const moveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
+            await driver.wait(until.elementIsVisible(moveButton), 5000);
+            await driver.wait(until.elementIsEnabled(moveButton), 5000);
+            await moveButton.click();
+            await driver.wait(until.stalenessOf(moveButton), 5000);
+        });
 
-        await driver.findElement(By.css('.jenkins-dropdown__item[href$="move"]')).click();
-        const selectedFolder = selectRandomFolder(project);
-        await new Select(driver.findElement(By.css('select[name="destination"]'))).selectByValue(`/${selectedFolder}`);
+        it('TC_01.006.02 | Verify a project is moved from a folder to the Dashboard page', async () => {
 
-        const moveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
-        await driver.wait(until.elementIsVisible(moveButton), 5000);
-        await driver.wait(until.elementIsEnabled(moveButton), 5000);
-        await moveButton.click();
-        
-        const folderLink = await driver.wait(until.elementLocated(By.linkText(selectedFolder)), 5000);
-        await driver.wait(until.elementIsVisible(folderLink), 5000);
-        await driver.actions().move({ origin: folderLink }).click().perform();
+            await driver.findElement(By.css('#side-panel [href$="move"]')).click();
+            await new Select(driver.findElement(By.css('select[name="destination"]'))).selectByValue('/');
 
-        projectLink = await driver.findElement(By.css(`.jenkins-table__link[href*="${project.userName}"]`));
-        expect(await projectLink.getText()).to.equal(project.userName);
-        expect(await projectLink.isDisplayed()).to.be.true;
+            const moveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
+            await driver.wait(until.elementIsVisible(moveButton), 5000);
+            await driver.wait(until.elementIsEnabled(moveButton), 5000);
+            await moveButton.click();
+            await driver.wait(until.stalenessOf(moveButton), 5000);
+
+            await driver.wait(until.elementLocated(By.id('jenkins-home-link')), 5000);
+            const jenkinsLogo = await driver.findElement(By.id('jenkins-home-link'));
+            await driver.wait(until.elementIsVisible(jenkinsLogo), 5000);
+            await jenkinsLogo.click();
+
+            const projectLink = await driver.findElement(By.css(`.jenkins-table__link[href*="${project.userName}"]`));
+            expect(await projectLink.getText()).to.equal(project.userName);
+            expect(await projectLink.isDisplayed()).to.be.true;
+        });
     });
 });

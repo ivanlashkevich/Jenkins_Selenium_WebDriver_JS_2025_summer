@@ -67,6 +67,7 @@ class BasePage extends Header {
         const moveMenuOption = await this.driver.findElement(this.moveMenuOptionLocator);
         await this.driver.wait(until.elementIsVisible(moveMenuOption), 5000);
         await moveMenuOption.click();
+        await this.driver.wait(until.stalenessOf(moveMenuOption), 5000);
     }
 
     async clickRenameMenuOption() {
@@ -118,6 +119,7 @@ class BasePage extends Header {
         await this.driver.wait(until.elementIsVisible(moveButton), 5000);
         await this.driver.wait(until.elementIsEnabled(moveButton), 5000);
         await moveButton.click();
+        await this.driver.wait(until.stalenessOf(moveButton), 5000);
     }
 
     async clickRenameButton() {

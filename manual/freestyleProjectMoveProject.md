@@ -15,16 +15,16 @@
 
 
 
-## TC_01.006.02 | Verify a project can be moved to the existing folder from the Dashboard page
+## TC_01.006.02 | Verify a project is moved from a folder to the Dashboard page
 **Preconditions:**
 1. User is logged in.
 2. Two Folders and a Freestyle project were created.
-3. User is on the Dashboard page.
+3. A Freestyle project was moved to a folder.
+4. User is on the Project page.
 
 **Steps:**
-1. Hover over the Freestyle project link in the job table.
-2. Click on the appeared chevron. 
-3. Click on the 'Move' dropdown menu option.
-4. Select the project destination path from a list of available folders.
-5. Click on the 'Move' button.
-6. Verify the Freestyle project was moved to the specified Folder.
+1. Click on the 'Move' link in the side menu.
+2. Select 'Jenkins' as the project destination path from a list of available options.
+3. Click on the 'Move' button.
+4. Click on the Jenkins logo.
+5. Verify the Freestyle project was moved to the Dashboard page.

@@ -10,7 +10,6 @@ class DashboardPage extends BasePage {
         this.jobTableLocator = By.className('jenkins-table');
         this.jobTitleLinkLocator = (name) => By.css(`.jenkins-table__link[href$="${name}/"]`);
         this.jobTableDropdownChevronLocator = (name) => By.css(`.jenkins-table__link[href*="${name}"] .jenkins-menu-dropdown-chevron`);
-        this.moveDropdownMenuItemLocator = By.css('.jenkins-dropdown__item[href$="move"]');
         this.scheduleBuildForItemLocator = (name) => By.css(`.jenkins-table__cell--tight [href*="${name}"]`);
 
     }
@@ -36,10 +35,6 @@ class DashboardPage extends BasePage {
         const chevron = await this.driver.wait(until.elementLocated(this.jobTableDropdownChevronLocator(name)), 5000);
         await this.driver.wait(until.elementIsVisible(chevron), 3000);
         await chevron.click();
-    }
-
-    async clickMoveDropdownMenuItem() {
-        await this.driver.findElement(this.moveDropdownMenuItemLocator).click();
     }
 
     async clickScheduleBuildForItem(name) {

@@ -23,6 +23,10 @@ class FreeStyleProjectPage extends BasePage {
         await new Select(this.driver.findElement(this.destinationFolderLocator)).selectByValue(`/${folderName}`);
     }
 
+    async selectJenkinsDestinationFolder() {
+        await new Select(this.driver.findElement(this.destinationFolderLocator)).selectByValue('/');
+    }
+
     async typeDescription(description) {
         await this.driver.findElement(this.descriptionInputFieldLocator).sendKeys(description);
     }

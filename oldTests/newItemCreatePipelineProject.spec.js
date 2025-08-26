@@ -40,9 +40,14 @@ describe('US_00.002 | New Item > Create Pipeline Project', () => {
 
     it('TC_00.002.01 | Verify the new pipeline is created if providing a unique name', async () => {
 
-        await driver.findElement(By.css('#side-panel [href$="newJob"]')).click();
-        await driver.findElement(By.id('name')).sendKeys(project.name);
-        await driver.findElement(By.className('org_jenkinsci_plugins_workflow_job_WorkflowJob')).click();
+        const newItemMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="newJob"]')), 5000);
+        await newItemMenuOption.click();
+
+        const itemNameField = await driver.wait(until.elementLocated(By.id('name')), 5000);
+        await itemNameField.sendKeys(project.userName);
+
+        const pipelineProjectType = await driver.wait(until.elementLocated(By.className('org_jenkinsci_plugins_workflow_job_WorkflowJob')), 5000);
+        await pipelineProjectType.click();
         
         const okButton = await driver.wait(until.elementLocated(By.id('ok-button')), 5000);
         await driver.wait(until.elementIsVisible(okButton), 5000);
@@ -57,15 +62,21 @@ describe('US_00.002 | New Item > Create Pipeline Project', () => {
 
         const element = await driver.findElement(By.css('#main-panel h1'));
         const elementText = await element.getText();
-        expect(elementText).to.equal(project.name);
+        expect(elementText).to.equal(project.userName);
         const currentURL = await driver.getCurrentUrl();
-        expect(currentURL.endsWith(`${project.name}/`)).to.be.true;
+        expect(currentURL.endsWith(`${project.userName}/`)).to.be.true;
     });
 
     it('TC_00.002.02 | Verify the display of the error message if item name already exists ', async () => {
-        await driver.findElement(By.css('#side-panel [href$="newJob"]')).click();
-        await driver.findElement(By.id('name')).sendKeys(project.name);
-        await driver.findElement(By.css('li[class$="FreeStyleProject"]')).click();
+
+        let newItemMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="newJob"]')), 5000);
+        await newItemMenuOption.click();
+
+        let itemNameField = await driver.wait(until.elementLocated(By.id('name')), 5000);
+        await itemNameField.sendKeys(project.userName);
+
+        const freestyleProjectType = await driver.wait(until.elementLocated(By.css('li[class$="FreeStyleProject"]')), 5000);
+        await freestyleProjectType.click();
 
         const okButton = await driver.wait(until.elementLocated(By.id('ok-button')), 5000);
         await driver.wait(until.elementIsVisible(okButton), 5000);
@@ -82,8 +93,11 @@ describe('US_00.002 | New Item > Create Pipeline Project', () => {
         await driver.wait(until.elementIsVisible(jenkinsLogo), 5000);
         await jenkinsLogo.click();
 
-        await driver.findElement(By.css('#side-panel [href$="newJob"]')).click();
-        await driver.findElement(By.id('name')).sendKeys(project.name);
+        newItemMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="newJob"]')), 5000);
+        await newItemMenuOption.click();
+
+        itemNameField = await driver.wait(until.elementLocated(By.id('name')), 5000);
+        await itemNameField.sendKeys(project.userName);
 
         const errorMessage = await driver.wait(until.elementLocated(By.id('itemname-invalid')), 5000);
         await driver.wait(until.elementIsVisible(errorMessage), 5000);

@@ -107,11 +107,13 @@ class BasePage extends Header {
     }
 
     async clearNewNameInputField() {
-        await this.driver.findElement(this.newNameInputFieldLocator).clear();
+        const newNameInputField = await this.driver.wait(until.elementLocated(this.newNameInputFieldLocator), 5000);
+        await newNameInputField.clear();
     }
 
     async fillNewItemName(name) {
-        await this.driver.findElement(this.newNameInputFieldLocator).sendKeys(name);
+        const newNameInputField = await this.driver.wait(until.elementLocated(this.newNameInputFieldLocator), 5000);
+        await newNameInputField.sendKeys(name);
     }
 
     async clickMoveButton() {
@@ -131,7 +133,8 @@ class BasePage extends Header {
     }
 
     async removeFocusFromInput() {
-        await this.driver.findElement(this.newNameInputFieldLocator).sendKeys(Key.TAB);
+        const newNameInputField = await this.driver.wait(until.elementLocated(this.newNameInputFieldLocator), 5000);
+        await newNameInputField.sendKeys(Key.TAB);
     }
 
     async getMainPanelHeadlineElement() {

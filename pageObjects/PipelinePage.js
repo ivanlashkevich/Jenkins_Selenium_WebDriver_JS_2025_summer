@@ -22,7 +22,8 @@ class PipelinePage extends BasePage {
     }
 
     async uncheckEnableDisableToggle() {
-        await this.driver.findElement(this.enabledProjectToggleLocator).click();
+        const enabledProjectToggle = await this.driver.wait(until.elementLocated(this.enabledProjectToggleLocator), 5000);
+        await enabledProjectToggle.click();
     }
 
     async clickEnableButton() {
@@ -57,7 +58,8 @@ class PipelinePage extends BasePage {
     }
 
     async typeRepositoryURL(url) {
-        await this.driver.findElement(this.repositoryURLInputFieldLocator).sendKeys(url);
+        const repositoryURLInputField = await this.driver.wait(until.elementLocated(this.repositoryURLInputFieldLocator), 5000);
+        await repositoryURLInputField.sendKeys(url);
     }
 
     async getDisabledToggle() {

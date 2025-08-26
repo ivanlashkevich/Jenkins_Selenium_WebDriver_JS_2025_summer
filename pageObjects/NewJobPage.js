@@ -15,19 +15,23 @@ class NewJobPage extends BasePage {
     }
 
     async typeNewItemName(name) {
-        await this.driver.findElement(this.itemNameFieldLocator).sendKeys(name);
+        const itemNameField = await this.driver.wait(until.elementLocated(this.itemNameFieldLocator), 5000);
+        await itemNameField.sendKeys(name);
     }
 
     async selectFreestyleProject() {
-        await this.driver.findElement(this.freestyleProjectTypeLocator).click();
+        const freestyleProjectType = await this.driver.wait(until.elementLocated(this.freestyleProjectTypeLocator), 5000);
+        await freestyleProjectType.click();
     }
 
     async selectPipelineProject() {
-        await this.driver.findElement(this.pipelineProjectTypeLocator).click();
+        const pipelineProjectType = await this.driver.wait(until.elementLocated(this.pipelineProjectTypeLocator), 5000);
+        await pipelineProjectType.click();
     }
 
     async selectFolder() {
-        await this.driver.findElement(this.folderTypeLocator).click()
+        const folderType = await this.driver.wait(until.elementLocated(this.folderTypeLocator), 5000);
+        await folderType.click()
     }
 
     async waitNameValidationMessage() {

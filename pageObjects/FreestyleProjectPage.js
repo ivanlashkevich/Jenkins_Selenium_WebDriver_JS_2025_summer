@@ -28,15 +28,18 @@ class FreeStyleProjectPage extends BasePage {
     }
 
     async typeDescription(description) {
-        await this.driver.findElement(this.descriptionInputFieldLocator).sendKeys(description);
+        const descriptionInputField = await this.driver.wait(until.elementLocated(this.descriptionInputFieldLocator), 5000);
+        await descriptionInputField.sendKeys(description);
     }
 
     async clickEditDescriptionLink() {
-        await this.driver.findElement(this.editDescriptionLinkLocator).click();
+        const editDescriptionLink = await this.driver.wait(until.elementLocated(this.editDescriptionLinkLocator), 5000);
+        await editDescriptionLink.click();
     }
 
     async clearEditDescriptionField() {
-        await this.driver.findElement(this.editDescriptionFieldLocator).clear();
+        const editDescriptionField = await this.driver.wait(until.elementLocated(this.editDescriptionFieldLocator), 5000);
+        await editDescriptionField.clear();
     }
 
     async clickDeleteProjectMenuOption() {

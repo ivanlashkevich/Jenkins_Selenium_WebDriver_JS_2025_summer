@@ -41,17 +41,20 @@ describe('US_01.002 | FreestyleProject > Rename Project', () => {
 
     it('TC_01.002.01 | Verify a project can be renamed from the Project page', async () => {
 
-        await driver.findElement(By.css('#side-panel [href$="rename"]')).click();
-        await driver.findElement(By.css('input[name="newName"]')).clear();
-        await driver.findElement(By.css('input[name="newName"]')).sendKeys(project.longName);
+        const renameMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="rename"]')), 5000);
+        await renameMenuOption.click();
+
+        const newNameField = await driver.wait(until.elementLocated(By.css('input[name="newName"]')), 5000);
+        await newNameField.clear();
+        await newNameField.sendKeys(project.longName);
+
         const renameButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
         await driver.wait(until.elementIsVisible(renameButton), 5000);
         await driver.wait(until.elementIsEnabled(renameButton), 5000);
         await renameButton.click();
         await driver.wait(until.stalenessOf(renameButton), 5000);
 
-        await driver.wait(until.elementLocated(By.css('#main-panel h1')), 5000);
-        const headlineElement = await driver.findElement(By.css('#main-panel h1'));
+        const headlineElement = await driver.wait(until.elementLocated(By.css('#main-panel h1')), 5000);
         await driver.wait(until.elementIsVisible(headlineElement), 5000);
         const headlineElementText = await headlineElement.getText();
         expect(headlineElementText).to.be.equal(project.longName);
@@ -60,17 +63,20 @@ describe('US_01.002 | FreestyleProject > Rename Project', () => {
 
     it('TC_01.002.02 | Verify the display of the renamed project on the Dashboard page', async () => {
 
-        await driver.findElement(By.css('#side-panel [href$="rename"]')).click();
-        await driver.findElement(By.css('input[name="newName"]')).clear();
-        await driver.findElement(By.css('input[name="newName"]')).sendKeys(project.longName);
+        const renameMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="rename"]')), 5000);
+        await renameMenuOption.click();
+
+        const newNameField = await driver.wait(until.elementLocated(By.css('input[name="newName"]')), 5000);
+        await newNameField.clear();
+        await newNameField.sendKeys(project.longName);
+
         const renameButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
         await driver.wait(until.elementIsVisible(renameButton), 5000);
         await driver.wait(until.elementIsEnabled(renameButton), 5000);
         await renameButton.click();
         await driver.wait(until.stalenessOf(renameButton), 5000);
 
-        await driver.wait(until.elementLocated(By.id('jenkins-home-link')), 5000);
-        const jenkinsLogo = await driver.findElement(By.id('jenkins-home-link'));
+        const jenkinsLogo = await driver.wait(until.elementLocated(By.id('jenkins-home-link')), 5000);
         await driver.wait(until.elementIsVisible(jenkinsLogo), 5000);
         await jenkinsLogo.click();
 
@@ -89,10 +95,13 @@ describe('US_01.002 | FreestyleProject > Rename Project', () => {
     it('TC_01.002.03 | Verify the Error display when the new Project name is invalid', async () => {
 
         await driver.sleep(300);
-        await driver.findElement(By.css('#side-panel [href$="rename"]')).click();
-        await driver.findElement(By.css('input[name="newName"]')).clear();
-        await driver.findElement(By.css('input[name="newName"]')).sendKeys(projectNameInvalid);
-        await driver.findElement(By.css('input[name="newName"]')).sendKeys(Key.TAB);
+        const renameMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="rename"]')), 5000);
+        await renameMenuOption.click();
+
+        const newNameField = await driver.wait(until.elementLocated(By.css('input[name="newName"]')), 5000);
+        await newNameField.clear();
+        await newNameField.sendKeys(projectNameInvalid);
+        await newNameField.sendKeys(Key.TAB);
 
         const oldErrorMessage = await driver.findElement(By.className('error'));
         await driver.wait(until.stalenessOf(oldErrorMessage), 5000);

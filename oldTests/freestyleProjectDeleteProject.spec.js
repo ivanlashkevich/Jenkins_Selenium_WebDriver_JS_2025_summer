@@ -35,10 +35,13 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         await driver.quit();
     });
 
-    it('TC_01.004.01 | Verify a project can be deleted from the Project page', async () => {
+    it( 'TC_01.004.01 | Verify a project can be deleted from the Project page', async () => {
 
-        await driver.findElement(By.css('#side-panel [data-url$="doDelete"]')).click();
-        await driver.findElement(By.css('button[data-id="ok"]')).click();
+        const deleteProjectMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [data-url$="doDelete"]')), 5000);
+        await deleteProjectMenuOption.click();
+
+        const yesButton = await driver.wait(until.elementLocated(By.css('button[data-id="ok"]')), 5000);
+        await yesButton.click();
 
         const projectTitleLink = await driver.findElements(By.css(`.jenkins-table__link[href$="${project.userName}/"]`));
         expect(projectTitleLink.length).to.equal(0);
@@ -51,7 +54,8 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
     it('TC_01.004.02 | Verify the display of the confirmation message before deleting the project', async () => {
 
-        await driver.findElement(By.css('#side-panel [data-url$="doDelete"]')).click();
+        const deleteProjectMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [data-url$="doDelete"]')), 5000);
+        await deleteProjectMenuOption.click();
 
         const jenkinsDialog = await driver.wait(until.elementLocated(By.className('jenkins-dialog')), 5000);
         await driver.wait(until.elementIsVisible(jenkinsDialog), 5000);
@@ -66,7 +70,8 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
     it('TC_01.004.03 | Verify the possibility to cancel a project deletion ', async () => {
 
-        await driver.findElement(By.css('#side-panel [data-url$="doDelete"]')).click();
+        const deleteProjectMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [data-url$="doDelete"]')), 5000);
+        await deleteProjectMenuOption.click();
 
         const cancelButton = await driver.wait(until.elementLocated(By.css('button[data-id="cancel"]')), 5000);
         await driver.wait(until.elementIsVisible(cancelButton), 5000);

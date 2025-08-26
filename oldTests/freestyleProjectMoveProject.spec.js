@@ -14,8 +14,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
     before(async () => {
         driver = await new Builder().forBrowser('chrome').build();
         await driver.manage().setTimeouts({
-            implicit: 0,
-            pageLoad: 20000,
+            pageLoad: 15000,
             script: 10000
         });
     });

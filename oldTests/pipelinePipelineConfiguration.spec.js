@@ -19,9 +19,8 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
     before(async () => {
         driver = await new Builder().forBrowser('chrome').build();
         await driver.manage().setTimeouts({
-            implicit: 3000,
-            pageLoad: 10000,
-            script: 5000
+            pageLoad: 15000,
+            script: 10000
         });
     });
 

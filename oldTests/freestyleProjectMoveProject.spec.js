@@ -48,7 +48,9 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
 
         it('TC_01.006.01 | Verify a project can be moved to one of the existing folders from the Project page', async () => {
 
-            await driver.findElement(By.css('#side-panel [href$="move"]')).click();
+            const moveMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="move"]')), 5000);
+            await moveMenuOption.click();
+
             const selectedFolder = selectRandomFolder(project);
             await new Select(driver.findElement(By.css('select[name="destination"]'))).selectByValue(`/${selectedFolder}`);
 
@@ -73,7 +75,9 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
     describe('A Freestyle project was moved to a folder', () => {
 
         beforeEach(async () => {
-            await driver.findElement(By.css('#side-panel [href$="move"]')).click();
+            const moveMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="move"]')), 5000);
+            await moveMenuOption.click();
+
             const selectedFolder = selectRandomFolder(project);
             await new Select(driver.findElement(By.css('select[name="destination"]'))).selectByValue(`/${selectedFolder}`);
 
@@ -86,7 +90,9 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
 
         it('TC_01.006.02 | Verify a project is moved from a folder to the Dashboard page', async () => {
 
-            await driver.findElement(By.css('#side-panel [href$="move"]')).click();
+            const moveMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="move"]')), 5000);
+            await moveMenuOption.click();
+
             await new Select(driver.findElement(By.css('select[name="destination"]'))).selectByValue('/');
 
             const moveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
@@ -95,8 +101,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
             await moveButton.click();
             await driver.wait(until.stalenessOf(moveButton), 5000);
 
-            await driver.wait(until.elementLocated(By.id('jenkins-home-link')), 5000);
-            const jenkinsLogo = await driver.findElement(By.id('jenkins-home-link'));
+            const jenkinsLogo = await driver.wait(until.elementLocated(By.id('jenkins-home-link')), 5000);
             await driver.wait(until.elementIsVisible(jenkinsLogo), 5000);
             await jenkinsLogo.click();
 

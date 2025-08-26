@@ -41,9 +41,14 @@ describe('US_00.000 | New Item > Create New item', () => {
 
     it('TC_00.000.01 | Verify a new item is created via the "New Item" link in the left sidebar', async () => {
 
-        await driver.findElement(By.css('#side-panel [href$="newJob"]')).click();
-        await driver.findElement(By.id('name')).sendKeys(project.name);
-        await driver.findElement(By.css('li[class$="FreeStyleProject"]')).click();
+        const newItemMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="newJob"]')), 5000);
+        await newItemMenuOption.click();
+
+        const itemNameField = await driver.wait(until.elementLocated(By.id('name')), 5000);
+        await itemNameField.sendKeys(project.name);
+
+        const freestyleProjectType = await driver.wait(until.elementLocated(By.css('li[class$="FreeStyleProject"]')), 5000);
+        await freestyleProjectType.click();
 
         const okButton = await driver.wait(until.elementLocated(By.id('ok-button')), 5000);
         await driver.wait(until.elementIsVisible(okButton), 5000);
@@ -69,8 +74,11 @@ describe('US_00.000 | New Item > Create New item', () => {
         await driver.wait(until.elementIsEnabled(createJobLink), 5000);
         await createJobLink.click();
 
-        await driver.findElement(By.id('name')).sendKeys(project.name);
-        await driver.findElement(By.css('li[class$="FreeStyleProject"]')).click();
+        const itemNameField = await driver.wait(until.elementLocated(By.id('name')), 5000);
+        await itemNameField.sendKeys(project.name);
+
+        const freestyleProjectType = await driver.wait(until.elementLocated(By.css('li[class$="FreeStyleProject"]')), 5000);
+        await freestyleProjectType.click();
 
         const okButton = await driver.wait(until.elementLocated(By.id('ok-button')), 5000);
         await driver.wait(until.elementIsVisible(okButton), 5000);
@@ -101,9 +109,14 @@ describe('US_00.000 | New Item > Create New item', () => {
 
     it('TC_00.000.03 | Verify item name does not contain any special characters', async () => {
 
-        await driver.findElement(By.css('#side-panel [href$="newJob"]')).click();
-        await driver.findElement(By.id('name')).sendKeys(project.name);
-        await driver.findElement(By.css('li[class$="FreeStyleProject"]')).click();
+        const newItemMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="newJob"]')), 5000);
+        await newItemMenuOption.click();
+
+        const itemNameField = await driver.wait(until.elementLocated(By.id('name')), 5000);
+        await itemNameField.sendKeys(project.name);
+
+        const freestyleProjectType = await driver.wait(until.elementLocated(By.css('li[class$="FreeStyleProject"]')), 5000);
+        await freestyleProjectType.click();
 
         const okButton = await driver.wait(until.elementLocated(By.id('ok-button')), 5000);
         await driver.wait(until.elementIsVisible(okButton), 5000);
@@ -132,8 +145,11 @@ describe('US_00.000 | New Item > Create New item', () => {
 
     it('TC_00.000.04 | Verify the display of the Error message in case the item name contains special characters', async () => {
 
-        await driver.findElement(By.css('#side-panel [href$="newJob"]')).click();
-        await driver.findElement(By.id('name')).sendKeys(projectNameInvalid);
+        const newItemMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="newJob"]')), 5000);
+        await newItemMenuOption.click();
+
+        const itemNameField = await driver.wait(until.elementLocated(By.id('name')), 5000);
+        await itemNameField.sendKeys(projectNameInvalid);
 
         const validationMessage = await driver.wait(until.elementLocated(By.id('itemname-invalid')), 5000);
         await driver.wait(until.elementIsVisible(validationMessage), 5000);

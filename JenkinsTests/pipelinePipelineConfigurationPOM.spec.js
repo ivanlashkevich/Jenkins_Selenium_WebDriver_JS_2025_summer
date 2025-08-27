@@ -4,6 +4,7 @@ import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
 import { expect } from 'chai';
 import { cleanData } from '../support/cleanData.js';
 import { login } from '../fixtures/helperFunctions.js';
+import { captureScreenshot } from '../fixtures/helperFunctions.js';
 import genData from '../fixtures/genData.js';
 import message from '../fixtures/messages.json' assert { type: 'json' };
 import repositoryURL from '../fixtures/pipelinePageData.json' assert { type: 'json' };
@@ -49,8 +50,9 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
         await newJobPage.clickOKButton();
     });
 
-    afterEach(async () => {
+    afterEach(async function () {
         await driver.sleep(1000);
+        await captureScreenshot(this.currentTest, driver);
     });
 
     after(async () => {

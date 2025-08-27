@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import { cleanData } from '../support/cleanData.js';
 import genData from '../fixtures/genData.js';
 import { login, createProject } from '../fixtures/helperFunctions.js';
+import { captureScreenshot } from '../fixtures/helperFunctions.js';
 import placeholderMessage from '../fixtures/projectPageData.json' assert { type: 'json' };
 import message from '../fixtures/buildPageData.json' assert { type: 'json' };
 import DashboardPage from '../pageObjects/DashboardPage.js';
@@ -56,8 +57,9 @@ describe('US_08.002 | Build history > Delete Build', () => {
         await freestyleProjectPage.clickBuildNowMenuOption();
     });
 
-    afterEach(async () => {
+    afterEach(async function () {
         await driver.sleep(1000);
+        await captureScreenshot(this.currentTest, driver);
     });
 
     after(async () => {

@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import { cleanData } from '../support/cleanData.js';
 import genData from '../fixtures/genData.js';
 import { login } from '../fixtures/helperFunctions.js';
+import { captureScreenshot } from '../fixtures/helperFunctions.js';
 import DashboardPage from '../pageObjects/DashboardPage.js';
 import NewJobPage from '../pageObjects/NewJobPage.js';
 import FreeStyleProjectPage from '../pageObjects/FreestyleProjectPage.js';
@@ -45,8 +46,9 @@ describe('US_01.001 | FreestyleProject > Add description', () => {
         await newJobPage.clickOKButton();
     });
 
-    afterEach(async () => {
+    afterEach(async function () {
         await driver.sleep(1000);
+        await captureScreenshot(this.currentTest, driver);
     });
 
     after(async () => {

@@ -9,6 +9,7 @@ allure-report/
 reports/
 mochawesomeReports/
 xunit.xml
+screenshots/
 
 # Environment files (sensitive data)
 .env

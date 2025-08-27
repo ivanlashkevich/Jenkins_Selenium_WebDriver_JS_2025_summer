@@ -4,6 +4,7 @@ import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
 import { expect } from 'chai';
 import { cleanData } from '../support/cleanData.js';
 import { login } from '../fixtures/helperFunctions.js';
+import { captureScreenshot } from '../fixtures/helperFunctions.js';
 import genData from '../fixtures/genData.js';
 import newJobPageData from '../fixtures/newJobPageData.json' assert { type: 'json' };
 import message from '../fixtures/messages.json' assert { type: 'json'};
@@ -37,7 +38,6 @@ describe('US_00.000 | New Item > Create New item', () => {
             pageLoad: 15000,
             script: 10000
         });
-        // await driver.manage().window().maximize();
     });
 
     beforeEach(async () => {
@@ -52,8 +52,9 @@ describe('US_00.000 | New Item > Create New item', () => {
         basePage = new BasePage(driver);
     });
 
-    afterEach(async () => {
+    afterEach(async function () {
         await driver.sleep(1000);
+        await captureScreenshot(this.currentTest, driver);
     });
 
     after(async () => {

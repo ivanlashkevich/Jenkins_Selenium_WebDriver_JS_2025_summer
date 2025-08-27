@@ -4,6 +4,7 @@ import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
 import { expect } from 'chai';
 import { cleanData } from '../support/cleanData.js';
 import { login, createProject } from '../fixtures/helperFunctions.js';
+import { captureScreenshot } from '../fixtures/helperFunctions.js';
 import genData from '../fixtures/genData.js';
 import DashboardPage from '../pageObjects/DashboardPage.js';
 import FreeStyleProjectPage from '../pageObjects/FreestyleProjectPage.js';
@@ -42,8 +43,9 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         await createProject(driver, project.name, 'Freestyle project');
     });
 
-    afterEach(async () => {
+    afterEach(async function () {
         await driver.sleep(1000);
+        await captureScreenshot(this.currentTest, driver);
     });
 
     after(async () => {

@@ -7,6 +7,8 @@ import FreeStyleProjectPage from '../pageObjects/FreestyleProjectPage.js';
 import PipelinePage from '../pageObjects/PipelinePage.js';
 import FolderPage from '../pageObjects/FolderPage.js';
 import Header from '../pageObjects/Header.js';
+import fs from 'fs';
+import path from 'path';
 
 const USERNAME = process.env.LOCAL_ADMIN_USERNAME || 'admin';
 const PASSWORD = process.env.LOCAL_ADMIN_PASSWORD || 'admin';
@@ -61,4 +63,22 @@ export function selectRandomFolder(project) {
     const folderArray = [`${project.folderName}`, `${project.longName}`];
     const randomIndex = Math.floor(Math.random() * folderArray.length);
     return folderArray[randomIndex];
+}
+
+export async function captureScreenshot(test, driver) {
+    if (!driver || test.state !== 'failed') return;
+
+    const screenshotDir = path.resolve(process.cwd(), 'screenshots');
+    if (!fs.existsSync(screenshotDir)) {
+        fs.mkdirSync(screenshotDir, { recursive: true });
+    }
+
+    const fileName = test.fullTitle()
+        .replace(/\s+/g, '_')
+        .replace(/[^a-zA-Z0-9_]/g, '') + '.png';
+
+    const filePath = path.join(screenshotDir, fileName);
+
+    const image = await driver.takeScreenshot();
+    fs.writeFileSync(filePath, image, 'base64');
 }

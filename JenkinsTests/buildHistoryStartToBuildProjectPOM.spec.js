@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import { cleanData } from '../support/cleanData.js';
 import genData from '../fixtures/genData.js';
 import { login, createProject } from '../fixtures/helperFunctions.js';
+import { captureScreenshot } from '../fixtures/helperFunctions.js';
 import BasePage from '../pageObjects/basePage.js';
 import DashboardPage from '../pageObjects/DashboardPage.js';
 import BuildHistoryPage from '../pageObjects/BuildHistoryPage.js';
@@ -49,8 +50,9 @@ describe('US_08.001 | Build history > Start to build a project', () => {
         projects = [{name: project.name, type: 'Freestyle project'}, {name: project.userName, type: 'Pipeline'}];
     });
 
-    afterEach(async () => {
+    afterEach(async function () {
         await driver.sleep(1000);
+        await captureScreenshot(this.currentTest, driver);
     });
 
     after(async () => {

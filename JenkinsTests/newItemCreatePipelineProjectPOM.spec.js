@@ -4,6 +4,7 @@ import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
 import { expect } from 'chai';
 import { cleanData } from '../support/cleanData.js';
 import { login, createProject } from '../fixtures/helperFunctions.js';
+import { captureScreenshot } from '../fixtures/helperFunctions.js';
 import genData from '../fixtures/genData.js';
 import message from '../fixtures/messages.json' assert { type: 'json' };
 import Header from '../pageObjects/Header.js';
@@ -35,7 +36,6 @@ describe('US_00.002 | New Item > Create Pipeline Project', () => {
             pageLoad: 15000,
             script: 10000
         });
-        // await driver.manage().window().maximize();
     });
 
     beforeEach(async () => {
@@ -50,8 +50,9 @@ describe('US_00.002 | New Item > Create Pipeline Project', () => {
         basePage = new BasePage(driver);
     });
 
-    afterEach(async () => {
+    afterEach(async function () {
         await driver.sleep(1000);
+        await captureScreenshot(this.currentTest, driver);
     });
 
     after(async () => {

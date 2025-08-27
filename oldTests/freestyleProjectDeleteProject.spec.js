@@ -36,6 +36,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
     it( 'TC_01.004.01 | Verify a project can be deleted from the Project page', async () => {
 
+        const oldMainPanel = await driver.findElement(By.css('#main-panel h1'));
         const deleteProjectMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [data-url$="doDelete"]')), 5000);
         await deleteProjectMenuOption.click();
 
@@ -45,10 +46,11 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         const projectTitleLink = await driver.findElements(By.css(`.jenkins-table__link[href$="${project.userName}/"]`));
         expect(projectTitleLink.length).to.equal(0);
 
-        const mainPanel = await driver.findElement(By.css('#main-panel h1'));
-        await driver.wait(until.elementTextContains(mainPanel, 'Welcome to Jenkins!'), 5000);
-        expect(await mainPanel.getText()).to.equal('Welcome to Jenkins!');
-        expect(await mainPanel.isDisplayed()).to.be.true;
+        await driver.wait(until.stalenessOf(oldMainPanel), 5000);
+        const newMainPanel = await driver.wait(until.elementLocated(By.css('#main-panel h1')), 5000);
+        await driver.wait(until.elementTextContains(newMainPanel, 'Welcome to Jenkins!'), 5000);
+        expect(await newMainPanel.getText()).to.equal('Welcome to Jenkins!');
+        expect(await newMainPanel.isDisplayed()).to.be.true;
     });
 
     it('TC_01.004.02 | Verify the display of the confirmation message before deleting the project', async () => {

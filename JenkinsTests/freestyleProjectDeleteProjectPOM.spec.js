@@ -52,15 +52,16 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
     it('TC_01.004.01 | Verify a project can be deleted from the Project page', async () => {
 
+        const oldMainPanel = await driver.findElement(dashboardPage.jobHeadlineLocator);
         await freestyleProjectPage.clickDeleteProjectMenuOption();
         await freestyleProjectPage.clickYesButton();
 
         const projectTitleLink = await dashboardPage.getProjectTitleLinkElements(project.name, false);
         expect(projectTitleLink.length).to.equal(0);
 
-        const mainPanel = await dashboardPage.waitUntilMainPanelContains('Welcome to Jenkins!');
-        expect(await mainPanel.getText()).to.equal('Welcome to Jenkins!');
-        expect(await mainPanel.isDisplayed()).to.be.true;
+        const newMainPanel = await dashboardPage.waitUntilMainPanelContains(oldMainPanel, 'Welcome to Jenkins!');
+        expect(await newMainPanel.getText()).to.equal('Welcome to Jenkins!');
+        expect(await newMainPanel.isDisplayed()).to.be.true;
     });
 
     it('TC_01.004.02 | Verify the display of the confirmation message before deleting the project', async () => {

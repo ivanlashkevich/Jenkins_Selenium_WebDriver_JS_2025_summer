@@ -91,8 +91,11 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
         let pipelineButton = await driver.wait(until.elementLocated(By.css('button[data-section-id="pipeline"]')), 5000);
         await pipelineButton.click();
 
-        await new Select(driver.findElement(By.css('#pipeline ~ .jenkins-form-item .jenkins-select__input.dropdownList'))).selectByVisibleText('Pipeline script');
-        await new Select(driver.findElement(By.css('.samples > select'))).selectByVisibleText('Scripted Pipeline');
+        const definitionDropdownMenu = await driver.wait(until.elementLocated(By.css('#pipeline ~ .jenkins-form-item .jenkins-select__input.dropdownList')), 5000);
+        await new Select(definitionDropdownMenu).selectByVisibleText('Pipeline script');
+
+        const scriptDropdownMenu = await driver.wait(until.elementLocated(By.css('.samples > select')), 5000);
+        await new Select(scriptDropdownMenu).selectByVisibleText('Scripted Pipeline');
 
         const saveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
         await driver.wait(until.elementIsVisible(saveButton), 5000);
@@ -114,8 +117,11 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
         let pipelineButton = await driver.wait(until.elementLocated(By.css('button[data-section-id="pipeline"]')), 5000);
         await pipelineButton.click();
 
-        await new Select(driver.findElement(By.css('#pipeline ~ .jenkins-form-item .jenkins-select__input.dropdownList'))).selectByVisibleText('Pipeline script from SCM');
-        await new Select(driver.findElement(By.css('.dropdownList-container .jenkins-form-item .jenkins-select__input.dropdownList'))).selectByVisibleText('Git');
+        const definitionDropdownMenu = await driver.wait(until.elementLocated(By.css('#pipeline ~ .jenkins-form-item .jenkins-select__input.dropdownList')), 5000);
+        await new Select(definitionDropdownMenu).selectByVisibleText('Pipeline script from SCM');
+
+        const scmDropdownMenu = await driver.wait(until.elementLocated(By.css('.dropdownList-container .jenkins-form-item .jenkins-select__input.dropdownList')), 5000);
+        await new Select(scmDropdownMenu).selectByVisibleText('Git');
 
         const repositoryURLInputField = await driver.wait(until.elementLocated(By.css('input[name="_.url"]')), 5000);
         await repositoryURLInputField.sendKeys(projectRepositoryURL);

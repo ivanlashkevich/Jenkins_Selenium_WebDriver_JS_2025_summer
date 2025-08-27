@@ -189,10 +189,11 @@ class BasePage extends Header {
         return await headlineElementText.getText();
     }
 
-    async waitUntilMainPanelContains(text) {
-        const mainPanel = await this.driver.findElement(this.jobHeadlineLocator);
-        await this.driver.wait(until.elementTextContains(mainPanel, text), 5000);
-        return mainPanel;
+    async waitUntilMainPanelContains(oldMainPanel, text) {
+        await this.driver.wait(until.stalenessOf(oldMainPanel), 5000);
+        const newMainPanel = await this.driver.wait(until.elementLocated(this.jobHeadlineLocator), 5000);
+        await this.driver.wait(until.elementTextContains(newMainPanel, text), 5000);
+        return newMainPanel;
     }
 
     async getBuildHistoryFrameBuildLink() {

@@ -20,11 +20,13 @@ class FreeStyleProjectPage extends BasePage {
     }
 
     async selectDestinationFolder(folderName) {
-        await new Select(this.driver.findElement(this.destinationFolderLocator)).selectByValue(`/${folderName}`);
+        const destinationFolder = await this.driver.wait(until.elementLocated(this.destinationFolderLocator), 5000);
+        await new Select(destinationFolder).selectByValue(`/${folderName}`);
     }
 
     async selectJenkinsDestinationFolder() {
-        await new Select(this.driver.findElement(this.destinationFolderLocator)).selectByValue('/');
+        const destinationFolder = await this.driver.wait(until.elementLocated(this.destinationFolderLocator), 5000);
+        await new Select(destinationFolder).selectByValue('/');
     }
 
     async typeDescription(description) {

@@ -42,19 +42,23 @@ class PipelinePage extends BasePage {
     }
 
     async selectPipelineScriptDropdownMenuItem() {
-        await new Select(this.driver.findElement(this.definitionDropdownMenuLocator)).selectByVisibleText('Pipeline script');
+        const definitionDropdownMenu = await this.driver.wait(until.elementLocated(this.definitionDropdownMenuLocator), 5000)
+        await new Select(definitionDropdownMenu).selectByVisibleText('Pipeline script');
     }
 
     async selectPipelineScriptFromSCMDropdownMenuItem() {
-        await new Select(this.driver.findElement(this.definitionDropdownMenuLocator)).selectByVisibleText('Pipeline script from SCM');
+        const definitionDropdownMenu = await this.driver.wait(until.elementLocated(this.definitionDropdownMenuLocator), 5000);
+        await new Select(definitionDropdownMenu).selectByVisibleText('Pipeline script from SCM');
     }
 
     async selectScriptedPipelineDropdownMenuItem() {
-        await new Select(this.driver.findElement(this.scriptDropdownMenuLocator)).selectByVisibleText('Scripted Pipeline');
+        const scriptDropdownMenu = await this.driver.wait(until.elementLocated(this.scriptDropdownMenuLocator), 5000);
+        await new Select(scriptDropdownMenu).selectByVisibleText('Scripted Pipeline');
     }
 
     async selectGitDropdownMenuItem() {
-        await new Select(this.driver.findElement(this.scmDropdownMenuLocator)).selectByVisibleText('Git');
+        const scmDropdownMenu = await this.driver.wait(until.elementLocated(this.scmDropdownMenuLocator), 5000);
+        await new Select(scmDropdownMenu).selectByVisibleText('Git');
     }
 
     async typeRepositoryURL(url) {

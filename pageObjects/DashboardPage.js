@@ -55,7 +55,9 @@ class DashboardPage extends BasePage {
 
     async getProjectTitleLinkElements(name, waitForPresence = true) {
         if (waitForPresence) {
-            return await this.driver.wait(until.elementsLocated(this.jobTitleLinkLocator(name)), 5000);
+            const elements = await this.driver.wait(until.elementsLocated(this.jobTitleLinkLocator(name)), 10000);
+            await this.driver.wait(until.elementIsVisible(elements[0]), 5000);
+            return elements;
         } else {
             return await this.driver.findElements(this.jobTitleLinkLocator(name));
         }

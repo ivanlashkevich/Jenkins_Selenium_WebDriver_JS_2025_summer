@@ -53,7 +53,6 @@ describe('US_00.000 | New Item > Create New item', () => {
     });
 
     afterEach(async function () {
-        await driver.sleep(1000);
         await captureScreenshot(this.currentTest, driver);
     });
 

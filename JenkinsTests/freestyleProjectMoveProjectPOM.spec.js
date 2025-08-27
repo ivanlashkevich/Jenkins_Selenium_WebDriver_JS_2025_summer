@@ -54,7 +54,6 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
     });
 
     afterEach(async function () {
-        await driver.sleep(1000);
         await captureScreenshot(this.currentTest, driver);
     });
 

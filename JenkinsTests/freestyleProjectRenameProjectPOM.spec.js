@@ -48,7 +48,6 @@ describe('US_01.002 | FreestyleProject > Rename Project', () => {
     });
 
     afterEach(async function () {
-        await driver.sleep(1000);
         await captureScreenshot(this.currentTest, driver);
     });
 

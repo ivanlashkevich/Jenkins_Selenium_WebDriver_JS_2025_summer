@@ -58,7 +58,6 @@ describe('US_08.002 | Build history > Delete Build', () => {
     });
 
     afterEach(async function () {
-        await driver.sleep(1000);
         await captureScreenshot(this.currentTest, driver);
     });
 

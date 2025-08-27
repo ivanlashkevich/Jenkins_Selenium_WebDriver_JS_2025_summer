@@ -51,7 +51,6 @@ describe('US_08.001 | Build history > Start to build a project', () => {
     });
 
     afterEach(async function () {
-        await driver.sleep(1000);
         await captureScreenshot(this.currentTest, driver);
     });
 

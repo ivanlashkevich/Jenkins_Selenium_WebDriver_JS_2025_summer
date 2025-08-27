@@ -47,7 +47,6 @@ describe('US_01.001 | FreestyleProject > Add description', () => {
     });
 
     afterEach(async function () {
-        await driver.sleep(1000);
         await captureScreenshot(this.currentTest, driver);
     });
 

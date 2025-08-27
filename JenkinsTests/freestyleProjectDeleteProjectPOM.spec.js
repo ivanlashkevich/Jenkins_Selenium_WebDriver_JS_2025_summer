@@ -44,7 +44,6 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
     });
 
     afterEach(async function () {
-        await driver.sleep(1000);
         await captureScreenshot(this.currentTest, driver);
     });
 

@@ -51,7 +51,6 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
     });
 
     afterEach(async function () {
-        await driver.sleep(1000);
         await captureScreenshot(this.currentTest, driver);
     });
 

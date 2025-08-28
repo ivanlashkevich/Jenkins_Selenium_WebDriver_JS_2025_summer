@@ -69,5 +69,20 @@ describe('US_14.003 | Header > Log out option', () => {
             await driver.wait(until.elementIsVisible(signInButton), 5000);
             expect(await signInButton.isDisplayed()).to.be.true;
         });
+
+        it('TC_14.003.04 | Verify session-related cookies are changed after log out', async () => {
+
+            const beforeLogOutCookies = await driver.manage().getCookies();
+            const sessionCookiesBefore = beforeLogOutCookies.find(cookie => cookie.name.includes('JSESSIONID'));
+
+            const logOutLink = await driver.wait(until.elementLocated(By.css('a[href="/logout"]')), 5000);
+            await driver.wait(until.elementIsVisible(logOutLink), 5000);
+            await logOutLink.click();
+
+            const afterLogOutCookies = await driver.manage().getCookies();
+            const sessionCookiesAfter = afterLogOutCookies.find(cookie => cookie.name.includes('JSESSIONID'));
+
+            expect(sessionCookiesBefore?.value).not.to.equal(sessionCookiesAfter?.value);
+        });
     });
 });

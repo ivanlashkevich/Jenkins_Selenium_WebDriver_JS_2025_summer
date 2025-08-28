@@ -1,32 +1,23 @@
-import dotenv from 'dotenv';
-dotenv.config();
-import { By, until } from 'selenium-webdriver';
+import LoginPage from '../pageObjects/LoginPage.js';
 import DashboardPage from '../pageObjects/DashboardPage.js';
 import NewJobPage from '../pageObjects/NewJobPage.js';
 import FreeStyleProjectPage from '../pageObjects/FreestyleProjectPage.js';
 import PipelinePage from '../pageObjects/PipelinePage.js';
 import FolderPage from '../pageObjects/FolderPage.js';
 import Header from '../pageObjects/Header.js';
+import { loginURL, USERNAME, PASSWORD } from '../support/config.js';
 import fs from 'fs';
 import path from 'path';
 
-const USERNAME = process.env.LOCAL_ADMIN_USERNAME || 'admin';
-const PASSWORD = process.env.LOCAL_ADMIN_PASSWORD || 'admin';
-const HOST = process.env.LOCAL_HOST || 'localhost';
-const PORT = process.env.LOCAL_PORT || 8080;
-const baseURL = `http://${HOST}:${PORT}`;
-
 export async function login(driver) {
-    const loginURL = `${baseURL}/login?from=%2F`;
+    const loginPage = new LoginPage(driver);
 
-    await driver.get(loginURL);
-    await driver.findElement(By.css('#j_username')).sendKeys(USERNAME);
-    await driver.findElement(By.css('#j_password')).sendKeys(PASSWORD);
-    const checkbox = await driver.findElement(By.css('#remember_me'));
-    await driver.actions().move({ origin: checkbox }).click().perform();
-    await driver.findElement(By.css('[name="Submit"]')).click();
-
-    await driver.wait(until.urlIs(`${baseURL}/`), 5000);
+    await loginPage.visit(loginURL);
+    await loginPage.typeUsername(USERNAME);
+    await loginPage.typePassword(PASSWORD);
+    await loginPage.checkKeepMeSignedInCheckbox();
+    await loginPage.clickSignInButton();
+    await loginPage.waitForLoad();
 }
 
 export async function createProject(driver, projectName, type, returnToDashboard = false) {

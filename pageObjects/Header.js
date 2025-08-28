@@ -10,6 +10,7 @@ class Header {
         this.newItemDropdownMenuItemLocator = By.css('.jenkins-dropdown__item[href$="newJob"]');
         this.jobTableLocator = By.className('jenkins-table');
         this.breadcrumbsFolderNameLocator = (folderName ) => By.linkText(folderName);
+        this.logOutLinkLocator = By.css('a[href="/logout"]');
 
     }
 
@@ -51,6 +52,12 @@ class Header {
         const folderLink = await this.driver.wait(until.elementLocated(this.breadcrumbsFolderNameLocator(folderName)), 5000);
         await this.driver.wait(until.elementIsVisible(folderLink), 5000);
         await this.driver.actions().move({ origin: folderLink }).click().perform();
+    }
+
+    async getLogOutLink() {
+        const logOutLink = await this.driver.wait(until.elementLocated(this.logOutLinkLocator), 5000);
+        await this.driver.wait(until.elementIsVisible(logOutLink), 5000);
+        return logOutLink;
     }
     
 }

@@ -54,12 +54,17 @@ class Header {
         await this.driver.actions().move({ origin: folderLink }).click().perform();
     }
 
+    async clickLogOutLink() {
+        const logOutLink = await this.driver.wait(until.elementLocated(this.logOutLinkLocator), 5000);
+        await this.driver.wait(until.elementIsVisible(logOutLink), 5000);
+        await logOutLink.click();
+    }
+
     async getLogOutLink() {
         const logOutLink = await this.driver.wait(until.elementLocated(this.logOutLinkLocator), 5000);
         await this.driver.wait(until.elementIsVisible(logOutLink), 5000);
         return logOutLink;
     }
-    
 }
 
 export default Header;

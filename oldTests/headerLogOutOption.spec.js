@@ -56,5 +56,18 @@ describe('US_14.003 | Header > Log out option', () => {
             const currentURL = await driver.getCurrentUrl();
             expect(currentURL).to.equal(loginURL);
         });
+
+        it('TC_14.003.03 | Verify the User is redirected to the Login page after clicking the "log out" link', async () => {
+
+            const logOutLink = await driver.wait(until.elementLocated(By.css('a[href="/logout"]')), 5000);
+            await driver.wait(until.elementIsVisible(logOutLink), 5000);
+            await logOutLink.click();
+
+            const currentURL = await driver.getCurrentUrl();
+            expect(currentURL).to.include('login');
+            const signInButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
+            await driver.wait(until.elementIsVisible(signInButton), 5000);
+            expect(await signInButton.isDisplayed()).to.be.true;
+        });
     });
 });

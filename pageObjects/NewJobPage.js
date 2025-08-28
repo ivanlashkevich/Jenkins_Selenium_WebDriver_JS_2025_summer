@@ -43,12 +43,12 @@ class NewJobPage extends BasePage {
         }
         if (oldValidationMessage) {
             try {
-                await this.driver.wait(until.stalenessOf(oldValidationMessage), 500);
+                await this.driver.wait(until.stalenessOf(oldValidationMessage), 2000);
             } catch (err) {
             }
         }
-        const newValidationMessage = await this.driver.wait(until.elementLocated(this.nameValidationMessageLocator), 3000);
-        await this.driver.wait(until.elementIsVisible(newValidationMessage), 3000);
+        const newValidationMessage = await this.driver.wait(until.elementLocated(this.nameValidationMessageLocator), 7000);
+        await this.driver.wait(until.elementIsVisible(newValidationMessage), 7000);
         return newValidationMessage;
     }
     

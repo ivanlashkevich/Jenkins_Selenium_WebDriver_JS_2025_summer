@@ -39,3 +39,17 @@ User is on the Login page.
 2. Verify:
     - the URL matches the Login page;
     - the Sign in button is displayed on the page.
+
+
+
+
+## TC_14.003.04 | Verify all session-related cookies are cleared after log out
+**Preconditions:**
+1. User is logged in.
+2. User is on the Dashboard page.
+
+**Steps:**
+1. Click on the 'log out' link in the header.
+2. Verify:
+    - session-related cookies are cleared (e.g. 'JSESSIONID');
+    - all cookies are cleared.

@@ -25,3 +25,17 @@ User is on the Login page.
 1. Click on the 'log out' link in the top right.
 2. Attempt to navigate to the Dashboard page.
 3. Verify User is redirected to the Login page when accessing the Dashboard page (e.g. http://localhost:8080);
+
+
+
+
+## TC_14.003.03 | Verify the User is redirected to the Login page after clicking the 'log out' link
+**Preconditions:**
+1. User is logged in.
+2. User is on the Dashboard page.
+
+**Steps:**
+1. Click on the 'log out' link in the top right.
+2. Verify:
+    - the URL matches the Login page;
+    - the Sign in button is displayed on the page.

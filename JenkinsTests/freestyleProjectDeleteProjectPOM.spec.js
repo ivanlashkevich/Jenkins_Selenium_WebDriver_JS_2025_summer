@@ -40,7 +40,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         dashboardPage = new DashboardPage(driver);
         freestyleProjectPage = new FreeStyleProjectPage(driver);
         header = new Header(driver);
-        await createProject(driver, project.name, 'Freestyle project');
+        await createProject(driver, project.userName, 'Freestyle project');
     });
 
     afterEach(async function () {
@@ -57,7 +57,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         await freestyleProjectPage.clickDeleteProjectMenuOption();
         await freestyleProjectPage.clickYesButton();
 
-        const projectTitleLink = await dashboardPage.getProjectTitleLinkElements(project.name, false);
+        const projectTitleLink = await dashboardPage.getProjectTitleLinkElements(project.userName, false);
         expect(projectTitleLink.length).to.equal(0);
 
         const newMainPanel = await dashboardPage.waitUntilMainPanelContains(oldMainPanel, 'Welcome to Jenkins!');
@@ -85,7 +85,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         await freestyleProjectPage.clickCancelButton();
         await header.clickJenkinsLogo();
 
-        const projectTitleLink = await dashboardPage.getProjectTitleLinkElements(project.name);
+        const projectTitleLink = await dashboardPage.getProjectTitleLinkElements(project.userName);
         expect(projectTitleLink.length).to.equal(1);
         expect(await projectTitleLink[0].isDisplayed()).to.be.true;
     });

@@ -50,6 +50,12 @@ class LoginPage {
         await this.waitForLoad();
     }
 
+    async getSignInButton() {
+        const signInButton = await this.driver.wait(until.elementLocated(this.signInButtonLocator), 5000);
+        await this.driver.wait(until.elementIsVisible(signInButton), 5000);
+        return signInButton;
+    }
+
 }
 
 export default LoginPage;

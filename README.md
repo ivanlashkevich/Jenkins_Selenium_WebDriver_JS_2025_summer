@@ -123,8 +123,14 @@ Import it like this:
 
 ### ✨ Project Features
 
-- 52 Selenium WebDriver UI tests (26 POM + 26 non-POM)
-- Mocha as the test runner (with Allure reporter integration)
-- Randomized test data with Faker.js
-- Global cleanup function executed before each test
-- Local Allure HTML reporting (optional)
+1. 52 Selenium WebDriver UI tests (26 POM + 26 non-POM)
+2. Mocha as the test runner (with Allure reporter integration)
+3. Randomized test data with Faker.js
+4. Global cleanup function executed before each test
+5. Local Allure HTML reporting (optional)
+6. CI/CD pipeline with GitHub Actions:
+   - Jenkins deployment in Docker (sets up Jenkins container)
+   - Test execution and Allure report generation
+   - Saving Allure report as an artifact
+   - Automatic publishing of Allure report to GitHub Pages
+   - Uploading test screenshots as artifacts on test failures

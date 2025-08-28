@@ -34,6 +34,9 @@ describe('US_08.002 | Build history > Delete Build', () => {
     });
 
     afterEach(async () => {
+        // Adds a forced wait in headed mode (local run):
+        // helps visually separate tests in the browser.
+        // Not used on CI (headless).
         await driver.sleep(1000);
     });
 

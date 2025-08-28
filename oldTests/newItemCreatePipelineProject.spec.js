@@ -19,7 +19,6 @@ describe('US_00.002 | New Item > Create Pipeline Project', () => {
             pageLoad: 15000,
             script: 10000
         });
-        // await driver.manage().window().maximize();
     });
 
     beforeEach(async () => {
@@ -30,6 +29,9 @@ describe('US_00.002 | New Item > Create Pipeline Project', () => {
     });
 
     afterEach(async () => {
+        // Adds a forced wait in headed mode (local run):
+        // helps visually separate tests in the browser.
+        // Not used on CI (headless).
         await driver.sleep(1000);
     });
 

@@ -27,6 +27,9 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
     });
 
     afterEach(async () => {
+        // Adds a forced wait in headed mode (local run):
+        // helps visually separate tests in the browser.
+        // Not used on CI (headless).
         await driver.sleep(1000);
     });
 

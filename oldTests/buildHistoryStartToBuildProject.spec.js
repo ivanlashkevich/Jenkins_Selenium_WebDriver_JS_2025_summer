@@ -31,6 +31,9 @@ describe('US_08.001 | Build history > Start to build a project', () => {
     });
 
     afterEach(async () => {
+        // Adds a forced wait in headed mode (local run):
+        // helps visually separate tests in the browser.
+        // Not used on CI (headless).
         await driver.sleep(1000);
     });
 

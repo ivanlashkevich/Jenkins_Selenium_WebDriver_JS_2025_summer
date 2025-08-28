@@ -40,6 +40,9 @@ describe('US_01.001 | FreestyleProject > Add description', () => {
     });
 
     afterEach(async () => {
+        // Adds a forced wait in headed mode (local run):
+        // helps visually separate tests in the browser.
+        // Not used on CI (headless).
         await driver.sleep(1000);
     });
 

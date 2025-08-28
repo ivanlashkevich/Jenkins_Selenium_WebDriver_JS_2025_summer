@@ -7,9 +7,9 @@
 This repository contains a personal automation testing project focused on automated UI testing of the Jenkins web interface using Selenium WebDriver (JavaScript).
 The project demonstrates practical UI test automation with classic Selenium tooling, including direct browser driver management, Mocha test runner, and manual Allure report generation.
 
-It currently includes 52 automated test cases:
-- 26 tests implemented using the Page Object Model (POM) pattern
-- 26 tests written without POM (for comparison and learning purposes)
+It currently includes 60 automated test cases:
+- 30 tests implemented using the Page Object Model (POM) pattern
+- 30 tests written without POM (for comparison and learning purposes)
 
 The project is designed to showcase proficiency with Selenium WebDriver, Mocha, and Allure.
 
@@ -123,7 +123,7 @@ Import it like this:
 
 ### ✨ Project Features
 
-1. 52 Selenium WebDriver UI tests (26 POM + 26 non-POM)
+1. 60 Selenium WebDriver UI tests (30 POM + 30 non-POM)
 2. Mocha as the test runner (with Allure reporter integration)
 3. Randomized test data with Faker.js
 4. Global cleanup function executed before each test

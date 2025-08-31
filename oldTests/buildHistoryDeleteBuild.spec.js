@@ -1,6 +1,7 @@
 import { Builder, By, until } from 'selenium-webdriver';
 import { after, afterEach, beforeEach, describe } from 'mocha';
 import { expect } from 'chai';
+import { DRIVER_TIMEOUTS, TIMEOUTS } from '../support/config.js';
 import { cleanData } from '../support/cleanData.js';
 import genData from '../fixtures/genData.js';
 import { login, createProject } from '../fixtures/helperFunctions.js';
@@ -16,10 +17,7 @@ describe('US_08.002 | Build history > Delete Build', () => {
 
     before(async () => {
         driver = await new Builder().forBrowser('chrome').build();
-        await driver.manage().setTimeouts({
-            pageLoad: 15000,
-            script: 10000
-        });
+        await driver.manage().setTimeouts(DRIVER_TIMEOUTS);
     });
 
     beforeEach(async () => {
@@ -28,8 +26,8 @@ describe('US_08.002 | Build history > Delete Build', () => {
         await driver.manage().deleteAllCookies();
         await login(driver);
         await createProject(driver, project.userName, 'Freestyle project');
-        const buildNowLink = await driver.wait(until.elementLocated(By.css('#side-panel [href*="build?"]')), 5000);
-        await driver.wait(until.elementIsVisible(buildNowLink), 5000);
+        const buildNowLink = await driver.wait(until.elementLocated(By.css('#side-panel [href*="build?"]')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(buildNowLink), TIMEOUTS.medium);
         await buildNowLink.click();
     });
 
@@ -46,64 +44,64 @@ describe('US_08.002 | Build history > Delete Build', () => {
 
     it('TC_08.002.01 | Verify the Build info disappears from the Build container block after deleting a build', async () => {
 
-        const buildHistoryFrameBuildLink = await driver.wait(until.elementLocated(By.css('#buildHistory .build-link.display-name')), 10000);
-        await driver.wait(until.elementIsVisible(buildHistoryFrameBuildLink), 10000);
+        const buildHistoryFrameBuildLink = await driver.wait(until.elementLocated(By.css('#buildHistory .build-link.display-name')), TIMEOUTS.long);
+        await driver.wait(until.elementIsVisible(buildHistoryFrameBuildLink), TIMEOUTS.long);
         await driver.executeScript('arguments[0].click();', buildHistoryFrameBuildLink);
 
-        const deleteBuildLink = await driver.wait(until.elementLocated(By.css('#side-panel [href$="confirmDelete"]')), 5000);
-        await driver.wait(until.elementIsVisible(deleteBuildLink), 5000);
+        const deleteBuildLink = await driver.wait(until.elementLocated(By.css('#side-panel [href$="confirmDelete"]')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(deleteBuildLink), TIMEOUTS.medium);
         await deleteBuildLink.click();
 
-        const deleteButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
-        await driver.wait(until.elementIsVisible(deleteButton), 5000);
+        const deleteButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(deleteButton), TIMEOUTS.medium);
         await deleteButton.click();
 
-        const noBuildsPlaceholder = await driver.wait(until.elementLocated(By.id('no-builds')), 5000);
-        await driver.wait(until.elementIsVisible(noBuildsPlaceholder), 5000);
+        const noBuildsPlaceholder = await driver.wait(until.elementLocated(By.id('no-builds')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(noBuildsPlaceholder), TIMEOUTS.medium);
         expect(await noBuildsPlaceholder.getText()).to.contain(noBuildsPlaceholderMessage);
         expect(await noBuildsPlaceholder.isDisplayed()).to.be.true;
     });
 
     it('TC_08.002.02 | Verify user can delete a build from the Build History page', async () => {
 
-        const dashboardLink = await driver.wait(until.elementLocated(By.css('#breadcrumbs [href="/"]')), 5000);
-        await driver.wait(until.elementIsVisible(dashboardLink), 5000);
+        const dashboardLink = await driver.wait(until.elementLocated(By.css('#breadcrumbs [href="/"]')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(dashboardLink), TIMEOUTS.medium);
         await dashboardLink.click();
 
-        const buildHistoryLink = await driver.wait(until.elementLocated(By.css('#side-panel [href$="builds"]')), 5000);
-        await driver.wait(until.elementIsVisible(buildHistoryLink), 5000);
+        const buildHistoryLink = await driver.wait(until.elementLocated(By.css('#side-panel [href$="builds"]')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(buildHistoryLink), TIMEOUTS.medium);
         await buildHistoryLink.click();
 
-        const projectBuildLink = await driver.wait(until.elementLocated(By.css(`[href$="${project.userName}/"] + .jenkins-table__badge`)), 5000);
-        await driver.wait(until.elementIsVisible(projectBuildLink), 5000);
+        const projectBuildLink = await driver.wait(until.elementLocated(By.css(`[href$="${project.userName}/"] + .jenkins-table__badge`)), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(projectBuildLink), TIMEOUTS.medium);
         await driver.executeScript('arguments[0].click();', projectBuildLink);
 
-        const deleteBuildLink = await driver.wait(until.elementLocated(By.css('#side-panel [href$="confirmDelete"]')), 5000);
-        await driver.wait(until.elementIsVisible(deleteBuildLink), 5000);
+        const deleteBuildLink = await driver.wait(until.elementLocated(By.css('#side-panel [href$="confirmDelete"]')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(deleteBuildLink), TIMEOUTS.medium);
         await deleteBuildLink.click();
 
-        const deleteButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
-        await driver.wait(until.elementIsVisible(deleteButton), 5000);
+        const deleteButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(deleteButton), TIMEOUTS.medium);
         await deleteButton.click();
 
-        const noBuildsPlaceholder = await driver.wait(until.elementLocated(By.id('no-builds')), 5000);
-        await driver.wait(until.elementIsVisible(noBuildsPlaceholder), 5000);
+        const noBuildsPlaceholder = await driver.wait(until.elementLocated(By.id('no-builds')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(noBuildsPlaceholder), TIMEOUTS.medium);
         expect(await noBuildsPlaceholder.getText()).to.contain(noBuildsPlaceholderMessage);
         expect(await noBuildsPlaceholder.isDisplayed()).to.be.true;
     });
 
     it('TC_08.002.03 | Verify the display of the confirmation message before deleting a build', async () => {
 
-        const buildHistoryFrameBuildLink = await driver.wait(until.elementLocated(By.css('#buildHistory .build-link.display-name')), 10000);
-        await driver.wait(until.elementIsVisible(buildHistoryFrameBuildLink), 10000);
+        const buildHistoryFrameBuildLink = await driver.wait(until.elementLocated(By.css('#buildHistory .build-link.display-name')), TIMEOUTS.long);
+        await driver.wait(until.elementIsVisible(buildHistoryFrameBuildLink), TIMEOUTS.long);
         await driver.executeScript('arguments[0].click();', buildHistoryFrameBuildLink);
 
-        const deleteBuildLink = await driver.wait(until.elementLocated(By.css('#side-panel [href$="confirmDelete"]')), 5000);
-        await driver.wait(until.elementIsVisible(deleteBuildLink), 5000);
+        const deleteBuildLink = await driver.wait(until.elementLocated(By.css('#side-panel [href$="confirmDelete"]')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(deleteBuildLink), TIMEOUTS.medium);
         await deleteBuildLink.click();
 
-        const deleteBuildConfirmationMessage = await driver.wait(until.elementLocated(By.css('#main-panel form span')), 5000);
-        await driver.wait(until.elementIsVisible(deleteBuildConfirmationMessage), 5000);
+        const deleteBuildConfirmationMessage = await driver.wait(until.elementLocated(By.css('#main-panel form span')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(deleteBuildConfirmationMessage), TIMEOUTS.medium);
         expect(await deleteBuildConfirmationMessage.isDisplayed()).to.be.true;
         expect(await deleteBuildConfirmationMessage.getText()).to.contain(deleteBuildMessage);
     });

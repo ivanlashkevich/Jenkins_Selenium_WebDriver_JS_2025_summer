@@ -1,6 +1,7 @@
 import { Builder, By, until } from 'selenium-webdriver';
 import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
 import { expect } from 'chai';
+import { DRIVER_TIMEOUTS, TIMEOUTS } from '../support/config.js';
 import { cleanData } from '../support/cleanData.js';
 import { login, createProject } from '../fixtures/helperFunctions.js';
 import genData from '../fixtures/genData.js';
@@ -12,10 +13,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
     before(async () => {
         driver = await new Builder().forBrowser('chrome').build();
-        await driver.manage().setTimeouts({
-            pageLoad: 15000,
-            script: 10000
-        });
+        await driver.manage().setTimeouts(DRIVER_TIMEOUTS);
     });
 
     beforeEach(async () => {
@@ -40,29 +38,29 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
     it( 'TC_01.004.01 | Verify a project can be deleted from the Project page', async () => {
 
         const oldMainPanel = await driver.findElement(By.css('#main-panel h1'));
-        const deleteProjectMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [data-url$="doDelete"]')), 5000);
+        const deleteProjectMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [data-url$="doDelete"]')), TIMEOUTS.medium);
         await deleteProjectMenuOption.click();
 
-        const yesButton = await driver.wait(until.elementLocated(By.css('button[data-id="ok"]')), 5000);
+        const yesButton = await driver.wait(until.elementLocated(By.css('button[data-id="ok"]')), TIMEOUTS.medium);
         await yesButton.click();
 
         const projectTitleLink = await driver.findElements(By.css(`.jenkins-table__link[href$="${project.userName}/"]`));
         expect(projectTitleLink.length).to.equal(0);
 
-        await driver.wait(until.stalenessOf(oldMainPanel), 5000);
-        const newMainPanel = await driver.wait(until.elementLocated(By.css('#main-panel h1')), 5000);
-        await driver.wait(until.elementTextContains(newMainPanel, 'Welcome to Jenkins!'), 5000);
+        await driver.wait(until.stalenessOf(oldMainPanel), TIMEOUTS.medium);
+        const newMainPanel = await driver.wait(until.elementLocated(By.css('#main-panel h1')), TIMEOUTS.medium);
+        await driver.wait(until.elementTextContains(newMainPanel, 'Welcome to Jenkins!'), TIMEOUTS.medium);
         expect(await newMainPanel.getText()).to.equal('Welcome to Jenkins!');
         expect(await newMainPanel.isDisplayed()).to.be.true;
     });
 
     it('TC_01.004.02 | Verify the display of the confirmation message before deleting the project', async () => {
 
-        const deleteProjectMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [data-url$="doDelete"]')), 5000);
+        const deleteProjectMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [data-url$="doDelete"]')), TIMEOUTS.medium);
         await deleteProjectMenuOption.click();
 
-        const jenkinsDialog = await driver.wait(until.elementLocated(By.className('jenkins-dialog')), 5000);
-        await driver.wait(until.elementIsVisible(jenkinsDialog), 5000);
+        const jenkinsDialog = await driver.wait(until.elementLocated(By.className('jenkins-dialog')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(jenkinsDialog), TIMEOUTS.medium);
         expect(await jenkinsDialog.isDisplayed()).to.be.true;
 
         const jenkinsDialogTitle = await driver.findElement(By.className('jenkins-dialog__title'));
@@ -74,19 +72,19 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
     it('TC_01.004.03 | Verify the possibility to cancel a project deletion ', async () => {
 
-        const deleteProjectMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [data-url$="doDelete"]')), 5000);
+        const deleteProjectMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [data-url$="doDelete"]')), TIMEOUTS.medium);
         await deleteProjectMenuOption.click();
 
-        const cancelButton = await driver.wait(until.elementLocated(By.css('button[data-id="cancel"]')), 5000);
-        await driver.wait(until.elementIsVisible(cancelButton), 5000);
-        await driver.wait(until.elementIsEnabled(cancelButton), 5000);
+        const cancelButton = await driver.wait(until.elementLocated(By.css('button[data-id="cancel"]')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(cancelButton), TIMEOUTS.medium);
+        await driver.wait(until.elementIsEnabled(cancelButton), TIMEOUTS.medium);
         await cancelButton.click();
 
-        const jenkinsLink = await driver.wait(until.elementLocated(By.id('jenkins-home-link')), 5000);
-        await driver.wait(until.elementIsVisible(jenkinsLink), 5000);
+        const jenkinsLink = await driver.wait(until.elementLocated(By.id('jenkins-home-link')), TIMEOUTS.medium);
+        await driver.wait(until.elementIsVisible(jenkinsLink), TIMEOUTS.medium);
         await jenkinsLink.click();
 
-        const projectTitleLink = await driver.wait(until.elementsLocated(By.css(`.jenkins-table__link[href$="${project.userName}/"]`)), 5000);
+        const projectTitleLink = await driver.wait(until.elementsLocated(By.css(`.jenkins-table__link[href$="${project.userName}/"]`)), TIMEOUTS.medium);
         expect(projectTitleLink.length).to.equal(1);
         expect(await projectTitleLink[0].isDisplayed()).to.be.true;
     });

@@ -1,4 +1,5 @@
 import { By, until } from 'selenium-webdriver';
+import { TIMEOUTS } from '../support/config.js';
 
 class Header {
 
@@ -15,54 +16,54 @@ class Header {
     }
 
     async clickJenkinsLogo() {
-        await this.driver.wait(until.elementLocated(this.jenkinsLogoLocator), 5000);
+        await this.driver.wait(until.elementLocated(this.jenkinsLogoLocator), TIMEOUTS.medium);
         const jenkinsLogo = await this.driver.findElement(this.jenkinsLogoLocator);
-        await this.driver.wait(until.elementIsVisible(jenkinsLogo), 5000);
+        await this.driver.wait(until.elementIsVisible(jenkinsLogo), TIMEOUTS.medium);
         await jenkinsLogo.click();
     }
 
     async clickDashhboardBreadcrumbLink() {
-        await this.driver.wait(until.elementLocated(this.dashboardBreadcrumbLinkLocator), 5000);
+        await this.driver.wait(until.elementLocated(this.dashboardBreadcrumbLinkLocator), TIMEOUTS.medium);
         const dashboardLink = await this.driver.findElement(this.dashboardBreadcrumbLinkLocator);
-        await this.driver.wait(until.elementIsVisible(dashboardLink), 5000);
+        await this.driver.wait(until.elementIsVisible(dashboardLink), TIMEOUTS.medium);
         await dashboardLink.click();
     }
 
     async hoverDashboardBreadcrumbLink() {
-        const dashboardLink = await this.driver.wait(until.elementLocated(this.dashboardBreadcrumbLinkLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(dashboardLink), 5000);
+        const dashboardLink = await this.driver.wait(until.elementLocated(this.dashboardBreadcrumbLinkLocator), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(dashboardLink), TIMEOUTS.medium);
         await this.driver.actions().move({ origin: dashboardLink }).perform();
     }
 
     async clickDashhboardBreadcrumbChevron() {
-        const chevron = await this.driver.wait(until.elementLocated(this.dashboardBreadcrumbChevronLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(chevron), 3000);
+        const chevron = await this.driver.wait(until.elementLocated(this.dashboardBreadcrumbChevronLocator), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(chevron), TIMEOUTS.medium);
         await this.driver.executeScript('arguments[0].click();', chevron);
         await this.driver.actions().move({ origin: chevron }).perform();
     }
 
     async clickNewItemDropdownMenuItem() {
-        const newItemDropdownMenuItem = await this.driver.wait(until.elementLocated(this.newItemDropdownMenuItemLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(newItemDropdownMenuItem), 5000);
-        await this.driver.wait(until.elementIsEnabled(newItemDropdownMenuItem), 5000);
+        const newItemDropdownMenuItem = await this.driver.wait(until.elementLocated(this.newItemDropdownMenuItemLocator), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(newItemDropdownMenuItem), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsEnabled(newItemDropdownMenuItem), TIMEOUTS.medium);
         await newItemDropdownMenuItem.click();
     }
 
     async clickBreadcrumbsFolderName(folderName) {
-        const folderLink = await this.driver.wait(until.elementLocated(this.breadcrumbsFolderNameLocator(folderName)), 5000);
-        await this.driver.wait(until.elementIsVisible(folderLink), 5000);
+        const folderLink = await this.driver.wait(until.elementLocated(this.breadcrumbsFolderNameLocator(folderName)), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(folderLink), TIMEOUTS.medium);
         await this.driver.actions().move({ origin: folderLink }).click().perform();
     }
 
     async clickLogOutLink() {
-        const logOutLink = await this.driver.wait(until.elementLocated(this.logOutLinkLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(logOutLink), 5000);
+        const logOutLink = await this.driver.wait(until.elementLocated(this.logOutLinkLocator), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(logOutLink), TIMEOUTS.medium);
         await logOutLink.click();
     }
 
     async getLogOutLink() {
-        const logOutLink = await this.driver.wait(until.elementLocated(this.logOutLinkLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(logOutLink), 5000);
+        const logOutLink = await this.driver.wait(until.elementLocated(this.logOutLinkLocator), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(logOutLink), TIMEOUTS.medium);
         return logOutLink;
     }
 }

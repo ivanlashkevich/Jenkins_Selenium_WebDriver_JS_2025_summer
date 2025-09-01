@@ -1,6 +1,7 @@
 import { Builder, By, until } from 'selenium-webdriver';
 import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
 import { expect } from 'chai';
+import { DRIVER_TIMEOUTS, TIMEOUTS } from '../support/config.js';
 import { Select } from 'selenium-webdriver/lib/select.js';
 import { cleanData } from '../support/cleanData.js';
 import { login, createProject, selectRandomFolder } from '../fixtures/helperFunctions.js';
@@ -13,10 +14,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
 
     before(async () => {
         driver = await new Builder().forBrowser('chrome').build();
-        await driver.manage().setTimeouts({
-            pageLoad: 15000,
-            script: 10000
-        });
+        await driver.manage().setTimeouts(DRIVER_TIMEOUTS);
     });
 
     beforeEach(async () => {
@@ -50,19 +48,19 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
 
         it('TC_01.006.01 | Verify a project can be moved to one of the existing folders from the Project page', async () => {
 
-            const moveMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="move"]')), 5000);
+            const moveMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="move"]')), TIMEOUTS.medium);
             await moveMenuOption.click();
 
             const selectedFolder = selectRandomFolder(project);
             await new Select(driver.findElement(By.css('select[name="destination"]'))).selectByValue(`/${selectedFolder}`);
 
-            const moveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
-            await driver.wait(until.elementIsVisible(moveButton), 5000);
-            await driver.wait(until.elementIsEnabled(moveButton), 5000);
+            const moveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), TIMEOUTS.medium);
+            await driver.wait(until.elementIsVisible(moveButton), TIMEOUTS.medium);
+            await driver.wait(until.elementIsEnabled(moveButton), TIMEOUTS.medium);
             await moveButton.click();
 
-            const folderLink = await driver.wait(until.elementLocated(By.linkText(selectedFolder)), 5000);
-            await driver.wait(until.elementIsVisible(folderLink), 5000);
+            const folderLink = await driver.wait(until.elementLocated(By.linkText(selectedFolder)), TIMEOUTS.medium);
+            await driver.wait(until.elementIsVisible(folderLink), TIMEOUTS.medium);
             await driver.actions().move({ origin: folderLink }).click().perform();
 
             const url = await driver.getCurrentUrl();
@@ -77,34 +75,34 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
     describe('A Freestyle project was moved to a folder', () => {
 
         beforeEach(async () => {
-            const moveMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="move"]')), 5000);
+            const moveMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="move"]')), TIMEOUTS.medium);
             await moveMenuOption.click();
 
             const selectedFolder = selectRandomFolder(project);
             await new Select(driver.findElement(By.css('select[name="destination"]'))).selectByValue(`/${selectedFolder}`);
 
-            const moveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
-            await driver.wait(until.elementIsVisible(moveButton), 5000);
-            await driver.wait(until.elementIsEnabled(moveButton), 5000);
+            const moveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), TIMEOUTS.medium);
+            await driver.wait(until.elementIsVisible(moveButton), TIMEOUTS.medium);
+            await driver.wait(until.elementIsEnabled(moveButton), TIMEOUTS.medium);
             await moveButton.click();
-            await driver.wait(until.stalenessOf(moveButton), 5000);
+            await driver.wait(until.stalenessOf(moveButton), TIMEOUTS.medium);
         });
 
         it('TC_01.006.02 | Verify a project is moved from a folder to the Dashboard page', async () => {
 
-            const moveMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="move"]')), 5000);
+            const moveMenuOption = await driver.wait(until.elementLocated(By.css('#side-panel [href$="move"]')), TIMEOUTS.medium);
             await moveMenuOption.click();
 
             await new Select(driver.findElement(By.css('select[name="destination"]'))).selectByValue('/');
 
-            const moveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), 5000);
-            await driver.wait(until.elementIsVisible(moveButton), 5000);
-            await driver.wait(until.elementIsEnabled(moveButton), 5000);
+            const moveButton = await driver.wait(until.elementLocated(By.css('button[name="Submit"]')), TIMEOUTS.medium);
+            await driver.wait(until.elementIsVisible(moveButton), TIMEOUTS.medium);
+            await driver.wait(until.elementIsEnabled(moveButton), TIMEOUTS.medium);
             await moveButton.click();
-            await driver.wait(until.stalenessOf(moveButton), 5000);
+            await driver.wait(until.stalenessOf(moveButton), TIMEOUTS.medium );
 
-            const jenkinsLogo = await driver.wait(until.elementLocated(By.id('jenkins-home-link')), 5000);
-            await driver.wait(until.elementIsVisible(jenkinsLogo), 5000);
+            const jenkinsLogo = await driver.wait(until.elementLocated(By.id('jenkins-home-link')), TIMEOUTS.medium);
+            await driver.wait(until.elementIsVisible(jenkinsLogo), TIMEOUTS.medium);
             await jenkinsLogo.click();
 
             const projectLink = await driver.findElement(By.css(`.jenkins-table__link[href*="${project.userName}"]`));

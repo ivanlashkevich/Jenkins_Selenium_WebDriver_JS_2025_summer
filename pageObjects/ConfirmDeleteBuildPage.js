@@ -1,5 +1,6 @@
 import { By, until } from 'selenium-webdriver';
 import BasePage from './basePage.js';
+import { TIMEOUTS } from '../support/config.js';
 
 class ConfirmDeleteBuildPage extends BasePage {
 
@@ -11,14 +12,14 @@ class ConfirmDeleteBuildPage extends BasePage {
     }
 
     async clickDeleteButton() {
-        const deleteButton = await this.driver.wait(until.elementLocated(this.deleteButtonLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(deleteButton), 5000);
+        const deleteButton = await this.driver.wait(until.elementLocated(this.deleteButtonLocator), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(deleteButton), TIMEOUTS.medium);
         await deleteButton.click();
     }
 
     async getDeleteBuildMessage() {
-        const deleteBuildMessage = await this.driver.wait(until.elementLocated(this.deleteBuildMessageLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(deleteBuildMessage), 5000);
+        const deleteBuildMessage = await this.driver.wait(until.elementLocated(this.deleteBuildMessageLocator), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(deleteBuildMessage), TIMEOUTS.medium);
         return deleteBuildMessage;
     }
 }

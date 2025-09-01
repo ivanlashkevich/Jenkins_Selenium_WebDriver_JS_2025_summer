@@ -1,5 +1,6 @@
 import { By, until } from 'selenium-webdriver';
 import { baseURL } from '../support/config.js';
+import { TIMEOUTS } from '../support/config.js';
 
 class LoginPage {
 
@@ -17,29 +18,29 @@ class LoginPage {
     }
 
     async typeUsername(name) {
-        const usernameField = await this.driver.wait(until.elementLocated(this.usernameFieldLocator), 5000);
+        const usernameField = await this.driver.wait(until.elementLocated(this.usernameFieldLocator), TIMEOUTS.medium);
         await usernameField.sendKeys(name);
     }
 
     async typePassword(password) {
-        const passwordField = await this.driver.wait(until.elementLocated(this.passwordFieldLocator), 5000);
+        const passwordField = await this.driver.wait(until.elementLocated(this.passwordFieldLocator), TIMEOUTS.medium);
         await passwordField.sendKeys(password);
     }
 
     async checkKeepMeSignedInCheckbox() {
-        const checkbox = await this.driver.wait(until.elementLocated(this.keepMeSignedInCheckboxLocator), 5000);
+        const checkbox = await this.driver.wait(until.elementLocated(this.keepMeSignedInCheckboxLocator), TIMEOUTS.medium);
         await this.driver.actions().move({ origin: checkbox }).click().perform();
     }
 
     async clickSignInButton() {
-        const signInButton = await this.driver.wait(until.elementLocated(this.signInButtonLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(signInButton), 5000);
-        await this.driver.wait(until.elementIsEnabled(signInButton), 5000);
+        const signInButton = await this.driver.wait(until.elementLocated(this.signInButtonLocator), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(signInButton), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsEnabled(signInButton), TIMEOUTS.medium);
         await signInButton.click();
     }
 
     async waitForLoad() {
-        await this.driver.wait(until.urlIs(`${baseURL}/`), 5000);
+        await this.driver.wait(until.urlIs(`${baseURL}/`), TIMEOUTS.medium);
     }
 
     async login(username, password) {
@@ -51,8 +52,8 @@ class LoginPage {
     }
 
     async getSignInButton() {
-        const signInButton = await this.driver.wait(until.elementLocated(this.signInButtonLocator), 5000);
-        await this.driver.wait(until.elementIsVisible(signInButton), 5000);
+        const signInButton = await this.driver.wait(until.elementLocated(this.signInButtonLocator), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(signInButton), TIMEOUTS.medium);
         return signInButton;
     }
 

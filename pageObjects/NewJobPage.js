@@ -1,5 +1,6 @@
 import { By, until } from 'selenium-webdriver';
 import BasePage from './basePage.js';
+import { TIMEOUTS } from '../support/config.js';
 
 class NewJobPage extends BasePage {
 
@@ -15,22 +16,22 @@ class NewJobPage extends BasePage {
     }
 
     async typeNewItemName(name) {
-        const itemNameField = await this.driver.wait(until.elementLocated(this.itemNameFieldLocator), 5000);
+        const itemNameField = await this.driver.wait(until.elementLocated(this.itemNameFieldLocator), TIMEOUTS.medium);
         await itemNameField.sendKeys(name);
     }
 
     async selectFreestyleProject() {
-        const freestyleProjectType = await this.driver.wait(until.elementLocated(this.freestyleProjectTypeLocator), 5000);
+        const freestyleProjectType = await this.driver.wait(until.elementLocated(this.freestyleProjectTypeLocator), TIMEOUTS.medium);
         await freestyleProjectType.click();
     }
 
     async selectPipelineProject() {
-        const pipelineProjectType = await this.driver.wait(until.elementLocated(this.pipelineProjectTypeLocator), 5000);
+        const pipelineProjectType = await this.driver.wait(until.elementLocated(this.pipelineProjectTypeLocator), TIMEOUTS.medium);
         await pipelineProjectType.click();
     }
 
     async selectFolder() {
-        const folderType = await this.driver.wait(until.elementLocated(this.folderTypeLocator), 5000);
+        const folderType = await this.driver.wait(until.elementLocated(this.folderTypeLocator), TIMEOUTS.medium);
         await folderType.click()
     }
 
@@ -43,12 +44,12 @@ class NewJobPage extends BasePage {
         }
         if (oldValidationMessage) {
             try {
-                await this.driver.wait(until.stalenessOf(oldValidationMessage), 2000);
+                await this.driver.wait(until.stalenessOf(oldValidationMessage), TIMEOUTS.short);
             } catch (err) {
             }
         }
-        const newValidationMessage = await this.driver.wait(until.elementLocated(this.nameValidationMessageLocator), 7000);
-        await this.driver.wait(until.elementIsVisible(newValidationMessage), 7000);
+        const newValidationMessage = await this.driver.wait(until.elementLocated(this.nameValidationMessageLocator), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(newValidationMessage), TIMEOUTS.medium);
         return newValidationMessage;
     }
     

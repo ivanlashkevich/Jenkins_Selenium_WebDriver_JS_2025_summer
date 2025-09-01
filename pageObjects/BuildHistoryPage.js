@@ -1,5 +1,6 @@
 import { By, until } from 'selenium-webdriver';
 import BasePage from './basePage.js';
+import { TIMEOUTS } from '../support/config.js';
 
 class BuildHistoryPage extends BasePage {
     constructor(driver) {
@@ -12,18 +13,18 @@ class BuildHistoryPage extends BasePage {
     }
 
     async getBuildHistoryTableBuildLink(name) {
-        const buildHistoryTableBuildLink = await this.driver.wait(until.elementLocated(this.buildHistoryTableBuildLinkLocator(name)), 5000);
-        await this.driver.wait(until.elementIsVisible(buildHistoryTableBuildLink), 5000);
+        const buildHistoryTableBuildLink = await this.driver.wait(until.elementLocated(this.buildHistoryTableBuildLinkLocator(name)), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(buildHistoryTableBuildLink), TIMEOUTS.medium);
         return buildHistoryTableBuildLink;
     }
 
     async getBuildHistoryTableBuildLinks() {
-        return await this.driver.wait(until.elementsLocated(this.buildHistoryTableBuildLinkBadgeLocator), 5000);
+        return await this.driver.wait(until.elementsLocated(this.buildHistoryTableBuildLinkBadgeLocator), TIMEOUTS.medium);
     }
 
     async clickProjectBuildLink(name) {
-        const projectBuildLink = await this.driver.wait(until.elementLocated(this.projectBuildLinkLocator(name)), 5000);
-        await this.driver.wait(until.elementIsVisible(projectBuildLink), 5000);
+        const projectBuildLink = await this.driver.wait(until.elementLocated(this.projectBuildLinkLocator(name)), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(projectBuildLink), TIMEOUTS.medium);
         await this.driver.executeScript('arguments[0].click();', projectBuildLink);
     }
 

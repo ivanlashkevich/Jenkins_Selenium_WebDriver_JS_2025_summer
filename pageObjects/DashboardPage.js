@@ -1,5 +1,6 @@
 import { By, until } from 'selenium-webdriver';
 import BasePage from './basePage.js';
+import { TIMEOUTS } from '../support/config.js';
 
 class DashboardPage extends BasePage {
     
@@ -15,9 +16,9 @@ class DashboardPage extends BasePage {
     }
 
     async clickCreateJobLink() {
-        await this.driver.wait(until.elementLocated(this.createJobLinkLocator), 5000);
+        await this.driver.wait(until.elementLocated(this.createJobLinkLocator), TIMEOUTS.medium);
         const createJobLink = await this.driver.findElement(this.createJobLinkLocator)
-        await this.driver.wait(until.elementIsVisible(createJobLink), 5000);
+        await this.driver.wait(until.elementIsVisible(createJobLink), TIMEOUTS.medium);
         await createJobLink.click();
     }
 
@@ -26,37 +27,37 @@ class DashboardPage extends BasePage {
     }
 
     async clickJobTitleLink(name) {
-        const jobTitleLink = await this.driver.wait(until.elementLocated(this.jobTitleLinkLocator(name)), 5000);
-        await this.driver.wait(until.elementIsVisible(jobTitleLink), 5000);
+        const jobTitleLink = await this.driver.wait(until.elementLocated(this.jobTitleLinkLocator(name)), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(jobTitleLink), TIMEOUTS.medium);
         await this.driver.actions().move({ origin: jobTitleLink }).click().perform();
     }
 
     async clickJobTableDropdownChevron(name) {
-        const chevron = await this.driver.wait(until.elementLocated(this.jobTableDropdownChevronLocator(name)), 5000);
-        await this.driver.wait(until.elementIsVisible(chevron), 3000);
+        const chevron = await this.driver.wait(until.elementLocated(this.jobTableDropdownChevronLocator(name)), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(chevron), TIMEOUTS.medium);
         await chevron.click();
     }
 
     async clickScheduleBuildForItem(name) {
-        const scheduleBuildLink = await this.driver.wait(until.elementLocated(this.scheduleBuildForItemLocator(name)), 5000);
-        await this.driver.wait(until.elementIsVisible(scheduleBuildLink), 5000);
+        const scheduleBuildLink = await this.driver.wait(until.elementLocated(this.scheduleBuildForItemLocator(name)), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(scheduleBuildLink), TIMEOUTS.medium);
         await scheduleBuildLink.click();
     }
 
     async waitForJobTitleLink(name) {
-        return await this.driver.wait(until.elementLocated(this.jobTitleLinkLocator(name)), 5000);
+        return await this.driver.wait(until.elementLocated(this.jobTitleLinkLocator(name)), TIMEOUTS.medium);
     }
 
     async getProjectLinkElement(name) {
-        const projectLink = await this.driver.wait(until.elementLocated(this.jobTitleLinkLocator(name)), 5000);
-        await this.driver.wait(until.elementIsVisible(projectLink), 5000);
+        const projectLink = await this.driver.wait(until.elementLocated(this.jobTitleLinkLocator(name)), TIMEOUTS.medium);
+        await this.driver.wait(until.elementIsVisible(projectLink), TIMEOUTS.medium);
         return projectLink;
     }
 
     async getProjectTitleLinkElements(name, waitForPresence = true) {
         if (waitForPresence) {
-            const elements = await this.driver.wait(until.elementsLocated(this.jobTitleLinkLocator(name)), 10000);
-            await this.driver.wait(until.elementIsVisible(elements[0]), 5000);
+            const elements = await this.driver.wait(until.elementsLocated(this.jobTitleLinkLocator(name)), TIMEOUTS.long);
+            await this.driver.wait(until.elementIsVisible(elements[0]), TIMEOUTS.medium);
             return elements;
         } else {
             return await this.driver.findElements(this.jobTitleLinkLocator(name));

@@ -2,6 +2,7 @@ import { Builder } from 'selenium-webdriver';
 import chrome from 'selenium-webdriver/chrome.js';
 import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
 import { expect } from 'chai';
+import { DRIVER_TIMEOUTS } from '../support/config.js';
 import { cleanData } from '../support/cleanData.js';
 import { login } from '../fixtures/helperFunctions.js';
 import { captureScreenshot } from '../fixtures/helperFunctions.js';
@@ -30,10 +31,7 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
 
     before(async () => {
         driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
-        await driver.manage().setTimeouts({
-            pageLoad: 15000,
-            script: 10000
-        });
+        await driver.manage().setTimeouts(DRIVER_TIMEOUTS);
     });
 
     beforeEach(async () => {
